@@ -5,7 +5,6 @@ gem 'sqlite3'
 gem 'will_paginate'
 gem 'nifty-generators'
 gem 'simple_form'
-gem 'twitter-bootstrap-rails'
 gem 'cancan'
 gem 'validates_timeliness'
 gem 'geokit'
@@ -42,7 +41,8 @@ end
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-
+	gem 'twitter-bootstrap-rails'
+	
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer'
 
