@@ -30,6 +30,10 @@ class Employee < ActiveRecord::Base
     "#{last_name}, #{first_name}"
   end
   
+  def proper_name
+    "#{first_name} #{last_name}"
+  end
+  
   def current_assignment
     curr_assignment = self.assignments.select{|a| a.end_date.nil?}
     # alternative method for finding current assignment is to use scope 'current' in assignments:

@@ -15,7 +15,9 @@ class Assignment < ActiveRecord::Base
   
   # Scopes
   scope :current, where('end_date IS NULL')
+  scope :past, where('end_date IS NOT NULL')
   scope :by_store, joins(:store).order('name')
+  scope :by_employee, joins(:employee).order('last_name, first_name')
   scope :chronological, order('start_date, end_date')
   scope :for_store, lambda {|store_id| where("store_id = ?", store_id) }
   scope :for_employee, lambda {|employee_id| where("employee_id = ?", employee_id) }

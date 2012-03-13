@@ -93,11 +93,22 @@ class AssignmentTest < ActiveSupport::TestCase
        assert_equal ["Ben", "Cindy", "Ed", "Kathryn", "Ben"], Assignment.chronological.map{|a| a.employee.first_name}
      end
      
+     should "have all the assignments listed alphabetically by employee name" do
+       assert_equal ["Crawford", "Gruberman", "Janeway", "Sisko", "Sisko"], Assignment.by_employee.map{|a| a.employee.last_name}
+     end
+     
      should "have a scope to find all current assignments for a store or employee" do
        assert_equal 2, Assignment.current.for_store(@cmu.id).size
        assert_equal 1, Assignment.current.for_store(@oakland.id).size
        assert_equal 1, Assignment.current.for_employee(@ben.id).size
        assert_equal 0, Assignment.current.for_employee(@ed.id).size
+     end
+     
+     should "have a scope to find all past assignments for a store or employee" do
+       assert_equal 2, Assignment.past.for_store(@cmu.id).size
+       assert_equal 0, Assignment.past.for_store(@oakland.id).size
+       assert_equal 1, Assignment.past.for_employee(@ben.id).size
+       assert_equal 0, Assignment.past.for_employee(@cindy.id).size
      end
      
      should "allow for a end date in the past (or today) but after the start date" do

@@ -125,6 +125,11 @@ class EmployeeTest < ActiveSupport::TestCase
       assert_equal "Heimann, Alex", @alex.name
     end    
     
+    # test the method 'proper_name'
+    should "shows proper name as first and last name" do
+      assert_equal "Alex Heimann", @alex.proper_name
+    end
+    
     # test the method 'current_assignment'
     should "shows return employee's current assignment if it exists" do
       assert_equal "CMU", @cindy.current_assignment.store.name
