@@ -123,13 +123,14 @@ namespace :db do
     current_assignments.each do |first_assignment|
       additional_assignments = rand(4)
       unless additional_assignments.zero?
-        Assignment.populate 1 do |asn2|
+        number_of = (2..49).to_a.sample
+        asn2 = Assignment.new
           asn2.employee_id = first_assignment.employee_id
           asn2.store_id = store_ids.sample
           asn2.pay_level = first_assignment.pay_level + 1
-          asn2.start_date = 7.weeks.ago..2.days.ago
+          asn2.start_date = number_of.days.ago
           asn2.end_date = nil
-        end
+        asn2.save!
       end
     end
   end
