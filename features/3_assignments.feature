@@ -12,7 +12,7 @@ Feature: Manage assignments
 		Then I should see "Current Assignments"
 		And I should see "Store"
 		And I should see "Employee"
-		And I should see "Pay Level"
+		And I should see "Pay"
 		And I should see "Start Date"
 		And I should see "Details"
 		And I should see "ACAC"
