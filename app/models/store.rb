@@ -5,7 +5,7 @@ class Store < ActiveRecord::Base
   # Relationships
   has_many :assignments
   has_many :employees, :through => :assignments
-  
+  has_many :shifts, :through => :assignments
   
   # Validations
   # make sure required fields are present
