@@ -1,0 +1,17 @@
+<h1>Shift Job</h1>
+
+<p>
+  <b>Shift</b><br>
+  <%= @shift_job.shift_id %>
+</p>
+
+<p>
+  <b>Job</b><br>
+  <%= @shift_job.job_id %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', shift_jobs_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_shift_job_path(@shift_job), :class => 'btn' %>
+  <%= link_to 'Delete', shift_job_path(@shift_job), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

@@ -1,0 +1,32 @@
+<h1>Assignment</h1>
+
+<p>
+  <b>Store</b><br>
+  <%= @assignment.store_id %>
+</p>
+
+<p>
+  <b>Employee</b><br>
+  <%= @assignment.employee_id %>
+</p>
+
+<p>
+  <b>Start date</b><br>
+  <%= @assignment.start_date %>
+</p>
+
+<p>
+  <b>End date</b><br>
+  <%= @assignment.end_date %>
+</p>
+
+<p>
+  <b>Pay level</b><br>
+  <%= @assignment.pay_level %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', assignments_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_assignment_path(@assignment), :class => 'btn' %>
+  <%= link_to 'Delete', assignment_path(@assignment), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

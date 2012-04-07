@@ -23,27 +23,27 @@
       <img src="./assets/0.5.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2012-04-06T19:27:22-04:00">2012-04-06T19:27:22-04:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2012-04-06T20:18:25-04:00">2012-04-06T20:18:25-04:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="red">62.34%</span></span>
+    (<span class="covered_percent"><span class="red">63.34%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         5.61
+         5.62
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>21</b> files in total.
-    <b>316</b> relevant lines. 
+    <b>311</b> relevant lines. 
     <span class="green"><b>197</b> lines covered</span> and
-    <span class="red"><b>119</b> lines missed </span>
+    <span class="red"><b>114</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -231,12 +231,12 @@
       
       <tr>
         <td class="strong"><a href="#07f4b128fb29fc32f49bed7547f981cd2a651f42" class="src_link" title="app/models/shift.rb">app/models/shift.rb</a></td>
-        <td class="red strong">73.53 %</td>
-        <td>93</td>
-        <td>34</td>
+        <td class="yellow strong">86.21 %</td>
+        <td>99</td>
+        <td>29</td>
         <td>25</td>
-        <td>9</td>
-        <td>0.7</td>
+        <td>4</td>
+        <td>0.9</td>
       </tr>
       
       <tr>
@@ -385,20 +385,20 @@
           <div class="file_list_container" id="Models">
   <h2>
     <span class="group_name">Models</span>
-    (<span class="covered_percent"><span class="yellow">89.31%</span></span>
+    (<span class="covered_percent"><span class="green">92.21%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         15.43
+         15.46
        </span>
     </span> hits/line)
   </h2>
   <a name="Models"></a>
   <div>
     <b>7</b> files in total.
-    <b>159</b> relevant lines. 
+    <b>154</b> relevant lines. 
     <span class="green"><b>142</b> lines covered</span> and
-    <span class="red"><b>17</b> lines missed </span>
+    <span class="red"><b>12</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -446,12 +446,12 @@
       
       <tr>
         <td class="strong"><a href="#07f4b128fb29fc32f49bed7547f981cd2a651f42" class="src_link" title="app/models/shift.rb">app/models/shift.rb</a></td>
-        <td class="red strong">73.53 %</td>
-        <td>93</td>
-        <td>34</td>
+        <td class="yellow strong">86.21 %</td>
+        <td>99</td>
+        <td>29</td>
         <td>25</td>
-        <td>9</td>
-        <td>0.7</td>
+        <td>4</td>
+        <td>0.9</td>
       </tr>
       
       <tr>
@@ -3630,11 +3630,11 @@
         <div class="source_table" id="07f4b128fb29fc32f49bed7547f981cd2a651f42">
   <div class="header">
     <h3>app/models/shift.rb</h3>
-    <h4><span class="red">73.53 %</span> covered</h4>
+    <h4><span class="yellow">86.21 %</span> covered</h4>
     <div>
-      <b>34</b> relevant lines. 
+      <b>29</b> relevant lines. 
       <span class="green"><b>25</b> lines covered</span> and
-      <span class="red"><b>9</b> lines missed.</span>
+      <span class="red"><b>4</b> lines missed.</span>
     </div>
   </div>
   
@@ -3740,31 +3740,31 @@
         <li class="never" data-hits="" data-linenumber="17">
           
           
-          <code class="ruby">  # ensure end time is after start time and not in the future</code>
+          <code class="ruby">  # make sure assignment id is a positive integer</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="18">
           <span class="hits">1</span>
           
-          <code class="ruby">  validates_time :end_time, :after =&gt; :start_time, :on_or_before =&gt; lambda { Time.current }, :allow_blank =&gt; true</code>
+          <code class="ruby">  validates_numericality_of :assignment_id, :greater_than_or_equal_to =&gt; 1</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="19">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="20">
           
           
-          <code class="ruby">  # make sure the assignment selected is one that is active</code>
+          <code class="ruby">  # ensure start time is before end time and not nil</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="21">
           <span class="hits">1</span>
           
-          <code class="ruby">  validate :assignment_is_active_in_system</code>
+          <code class="ruby">  validates_time :start_time, :before =&gt; :start_time, :allow_nil =&gt; false</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="22">
@@ -3776,61 +3776,61 @@
         <li class="never" data-hits="" data-linenumber="23">
           
           
-          <code class="ruby">  # Scopes</code>
+          <code class="ruby">  # ensure end time is after start time</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="24">
+        <li class="covered" data-hits="1" data-linenumber="24">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">  # -----------------------------</code>
+          <code class="ruby">  validates_time :end_time, :after =&gt; :start_time, :allow_nil =&gt; true</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="25">
           
           
-          <code class="ruby">  # returns shifts of certain assignment</code>
+          <code class="ruby">  </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="26">
+        <li class="never" data-hits="" data-linenumber="26">
+          
+          
+          <code class="ruby">  # make sure the assignment selected is one that is active</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="27">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :for_assignment, lambda {|assignment_id| where(&quot;assignment_id = ?&quot;, assignment_id) }</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="27">
-          
-          
-          <code class="ruby">  </code>
+          <code class="ruby">  validate :assignment_is_active_in_system</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="28">
           
           
-          <code class="ruby">  # returns shifts in chronological order</code>
+          <code class="ruby">  </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="29">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="29">
           
-          <code class="ruby">  scope :chronological, order('date, start_time, end_time')</code>
+          
+          <code class="ruby">  # Scopes</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="30">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby">  # -----------------------------</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="31">
           
           
-          <code class="ruby">  # returns all shifts in the system that have at least one job associated with them</code>
+          <code class="ruby">  # returns shifts of certain assignment</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="32">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :completed, joins(:shiftjobs).where('job_id IS NOT NULL')</code>
+          <code class="ruby">  scope :for_assignment, lambda {|assignment_id| where(&quot;assignment_id = ?&quot;, assignment_id) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="33">
@@ -3842,13 +3842,13 @@
         <li class="never" data-hits="" data-linenumber="34">
           
           
-          <code class="ruby">  # returns all shifts in the system that have do not have at least one job associated with the</code>
+          <code class="ruby">  # returns shifts in chronological order</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="35">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :incomplete, joins(:shiftjobs).where('job_id IS NULL')</code>
+          <code class="ruby">  scope :chronological, order('date, start_time, end_time')</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="36">
@@ -3860,13 +3860,13 @@
         <li class="never" data-hits="" data-linenumber="37">
           
           
-          <code class="ruby">  # returns all shifts that are associated with a given store</code>
+          <code class="ruby">  # returns all shifts in the system that have at least one job associated with them</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="38">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :for_store, lambda {|store_id| where(&quot;store_id = ?&quot;, store_id) }</code>
+          <code class="ruby">  scope :completed, joins(:shiftjobs).where('job_id IS NOT NULL')</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="39">
@@ -3878,13 +3878,13 @@
         <li class="never" data-hits="" data-linenumber="40">
           
           
-          <code class="ruby">  # returns all shifts that are associated with a given employee</code>
+          <code class="ruby">  # returns all shifts in the system that have do not have at least one job associated with the</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="41">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :for_employee, lambda {|employee_id| where(&quot;employee_id = ?&quot;, employee_id) }</code>
+          <code class="ruby">  scope :incomplete, joins(:shiftjobs).where('job_id IS NULL')</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="42">
@@ -3896,13 +3896,13 @@
         <li class="never" data-hits="" data-linenumber="43">
           
           
-          <code class="ruby">  # returns all shifts which have a date in the past</code>
+          <code class="ruby">  # returns all shifts that are associated with a given store</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="44">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :past, where(&quot;date &lt; ?&quot;, Date.today)</code>
+          <code class="ruby">  scope :for_store, lambda {|store_id| where(&quot;store_id = ?&quot;, store_id) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="45">
@@ -3914,13 +3914,13 @@
         <li class="never" data-hits="" data-linenumber="46">
           
           
-          <code class="ruby">  # returns all shifts which have a date in the present or future</code>
+          <code class="ruby">  # returns all shifts that are associated with a given employee</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="47">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :upcoming, where(&quot;date &gt;= ?&quot;, Date.today)</code>
+          <code class="ruby">  scope :for_employee, lambda {|employee_id| where(&quot;employee_id = ?&quot;, employee_id) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="48">
@@ -3932,13 +3932,13 @@
         <li class="never" data-hits="" data-linenumber="49">
           
           
-          <code class="ruby">  # returns all the upcoming shifts in the next 'x' days </code>
+          <code class="ruby">  # returns all shifts which have a date in the past</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="50">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :for_next_days, lambda {|x| where(&quot;date &gt;= ? AND date &lt;= ?&quot;, Date.today, Date.today + x.days) }</code>
+          <code class="ruby">  scope :past, where(&quot;date &lt; ?&quot;, Date.today)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="51">
@@ -3950,31 +3950,31 @@
         <li class="never" data-hits="" data-linenumber="52">
           
           
-          <code class="ruby">  # returns all the past shifts in the previous 'x' days</code>
+          <code class="ruby">  # returns all shifts which have a date in the present or future</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="53">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :for_past_days, lambda {|x| where(&quot;date &lt;= ? AND date &gt;= ?&quot;, Date.today, Date.today - x.days) }</code>
+          <code class="ruby">  scope :upcoming, where(&quot;date &gt;= ?&quot;, Date.today)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="54">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="55">
           
           
-          <code class="ruby">  # orders values by store  </code>
+          <code class="ruby">  # returns all the upcoming shifts in the next 'x' days </code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="56">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :by_store, joins(:store).order('name')</code>
+          <code class="ruby">  scope :for_next_days, lambda {|x| where(&quot;date &gt;= ? AND date &lt;= ?&quot;, Date.today, Date.today + x.days) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="57">
@@ -3986,214 +3986,250 @@
         <li class="never" data-hits="" data-linenumber="58">
           
           
-          <code class="ruby">  # orders values by employee's last, first names</code>
+          <code class="ruby">  # returns all the past shifts in the previous 'x' days</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="59">
           <span class="hits">1</span>
           
-          <code class="ruby">  scope :by_employee, joins(:employee).order('last_name, first_name')</code>
+          <code class="ruby">  scope :for_past_days, lambda {|x| where(&quot;date &lt;= ? AND date &gt;= ?&quot;, Date.today, Date.today - x.days) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="60">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="61">
           
           
-          <code class="ruby">  # Methods</code>
+          <code class="ruby">  # orders values by store  </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="62">
-          
-          
-          <code class="ruby">  # -----------------------------</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="63">
+        <li class="covered" data-hits="1" data-linenumber="62">
           <span class="hits">1</span>
           
-          <code class="ruby">  def completed?</code>
+          <code class="ruby">  scope :by_store, joins(:store).order('name')</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="63">
+          
+          
+          <code class="ruby">  </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="64">
           
           
-          <code class="ruby">    # get an array of all shifts in the shiftjob table</code>
+          <code class="ruby">  # orders values by employee's last, first names</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="65">
+        <li class="covered" data-hits="1" data-linenumber="65">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">    possible_shift_ids = ShiftJob.all.shift_id.map{|s| s.id}</code>
+          <code class="ruby">  scope :by_employee, joins(:employee).order('last_name, first_name')</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="66">
           
           
-          <code class="ruby">    # return true if shift id is in the array</code>
+          <code class="ruby">  </code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="67">
+        <li class="never" data-hits="" data-linenumber="67">
           
           
-          <code class="ruby">    if possible_shift_ids.contains(self.id)</code>
+          <code class="ruby">  # Methods</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="68">
+        <li class="never" data-hits="" data-linenumber="68">
           
           
-          <code class="ruby">      return true</code>
+          <code class="ruby">  # -----------------------------</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="69">
+        <li class="covered" data-hits="1" data-linenumber="69">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">    end</code>
+          <code class="ruby">  def completed?</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="70">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby">    # get an array of all shifts in the shiftjob table</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="71">
+        <li class="missed" data-hits="0" data-linenumber="71">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby">    possible_shift_ids = ShiftJob.all.shift_id.map{|s| s.id}</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="72">
           
           
-          <code class="ruby">  # Callback Methods</code>
+          <code class="ruby">    # return true if shift id is in the array</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="73">
+        <li class="missed" data-hits="0" data-linenumber="73">
           
           
-          <code class="ruby">  # -----------------------------</code>
+          <code class="ruby">    if possible_shift_ids.contains(self.id)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="74">
-          <span class="hits">1</span>
+        <li class="missed" data-hits="0" data-linenumber="74">
           
-          <code class="ruby">  private</code>
+          
+          <code class="ruby">      return true</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="75">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def set_end_time</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="76">
-          
-          
-          <code class="ruby">    self.end_time = self.start_time + 3.hours</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="77">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="78">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="79">
-          
-          
-          <code class="ruby">  # Private methods used to execute the custom validations</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="80">
-          
-          
-          <code class="ruby">  # -----------------------------</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="81">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  private</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="82">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def assignment_is_active_in_system</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="83">
-          
-          
-          <code class="ruby">    # get an array of all assignment ids</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="84">
-          
-          
-          <code class="ruby">    possible_assignment_ids = Assignment.active.all.map{|a| a.id}</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="85">
-          
-          
-          <code class="ruby">    # add error unless the assignment id is in the array of possible ids</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="86">
-          
-          
-          <code class="ruby">    unless possible_assignment_ids.include?(self.assignment_id)</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="87">
-          
-          
-          <code class="ruby">      errors.add(:assignment_id, &quot;is not an active assignment&quot;)</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="88">
-          
-          
-          <code class="ruby">      return false</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="89">
+        <li class="never" data-hits="" data-linenumber="75">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="90">
-          
-          
-          <code class="ruby">    return true</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="91">
+        <li class="never" data-hits="" data-linenumber="76">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="92">
+        <li class="never" data-hits="" data-linenumber="77">
           
           
           <code class="ruby">  </code>
         </li>
       
+        <li class="never" data-hits="" data-linenumber="78">
+          
+          
+          <code class="ruby">  # Callback Methods</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="79">
+          
+          
+          <code class="ruby">  # -----------------------------</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="80">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  private</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="81">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def set_end_time</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="82">
+          
+          
+          <code class="ruby">    self.end_time = self.start_time + 3.hours</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="83">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="84">
+          
+          
+          <code class="ruby">=begin</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="85">
+          
+          
+          <code class="ruby">  # Private methods used to execute the custom validations</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="86">
+          
+          
+          <code class="ruby">  # -----------------------------</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="87">
+          
+          
+          <code class="ruby">  private</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="88">
+          
+          
+          <code class="ruby">  def assignment_is_active_in_system</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="89">
+          
+          
+          <code class="ruby">    # get an array of all assignment ids</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="90">
+          
+          
+          <code class="ruby">    possible_assignment_ids = Assignment.active.all.map{|a| a.id}</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="91">
+          
+          
+          <code class="ruby">    # add error unless the assignment id is in the array of possible ids</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="92">
+          
+          
+          <code class="ruby">    unless possible_assignment_ids.include?(self.assignment_id)</code>
+        </li>
+      
         <li class="never" data-hits="" data-linenumber="93">
+          
+          
+          <code class="ruby">      errors.add(:assignment_id, &quot;is not an active assignment&quot;)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="94">
+          
+          
+          <code class="ruby">      return false</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="95">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="96">
+          
+          
+          <code class="ruby">    return true</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="97">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="98">
+          
+          
+          <code class="ruby">=end  </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="99">
           
           
           <code class="ruby">end</code>

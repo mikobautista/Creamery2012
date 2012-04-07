@@ -1,0 +1,42 @@
+<h1>Employee</h1>
+
+<p>
+  <b>First name</b><br>
+  <%= @employee.first_name %>
+</p>
+
+<p>
+  <b>Last name</b><br>
+  <%= @employee.last_name %>
+</p>
+
+<p>
+  <b>Ssn</b><br>
+  <%= @employee.ssn %>
+</p>
+
+<p>
+  <b>Date of birth</b><br>
+  <%= @employee.date_of_birth %>
+</p>
+
+<p>
+  <b>Phone</b><br>
+  <%= @employee.phone %>
+</p>
+
+<p>
+  <b>Role</b><br>
+  <%= @employee.role %>
+</p>
+
+<p>
+  <b>Active</b><br>
+  <%= @employee.active %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', employees_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_employee_path(@employee), :class => 'btn' %>
+  <%= link_to 'Delete', employee_path(@employee), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

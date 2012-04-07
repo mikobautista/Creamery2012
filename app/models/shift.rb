@@ -14,8 +14,14 @@ class Shift < ActiveRecord::Base
   # make sure required fields are present
   validates_presence_of :assignment_id, :date, :start_time
   
-  # ensure end time is after start time and not in the future
-  validates_time :end_time, :after => :start_time, :on_or_before => lambda { Time.current }, :allow_blank => true
+  # make sure assignment id is a positive integer
+  validates_numericality_of :assignment_id, :only_integer => true, :greater_than => 0
+
+  # ensure start time is before end time and not nil
+  validates_time :start_time, :before => :end_time, :allow_nil => false
+  
+  # ensure end time is after start time
+  validates_time :end_time, :after => :start_time, :allow_nil => true
   
   # make sure the assignment selected is one that is active
   validate :assignment_is_active_in_system
@@ -75,7 +81,7 @@ class Shift < ActiveRecord::Base
   def set_end_time
     self.end_time = self.start_time + 3.hours
   end
-
+=begin
   # Private methods used to execute the custom validations
   # -----------------------------
   private
@@ -89,5 +95,5 @@ class Shift < ActiveRecord::Base
     end
     return true
   end
-  
+=end  
 end

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   def index
     # get all the data on current assignments in the system, 10 per page
-    @users = User.alphabetical.paginate(:page => params[:page]).per_page(10)
+    @users = User.paginate(:page => params[:page]).per_page(10)
   end
   
   def new

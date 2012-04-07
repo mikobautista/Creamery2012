@@ -1,0 +1,18 @@
+<%= simple_form_for @employee, :html => { :class => 'form-horizontal' } do |f| %>
+  <fieldset>
+    <legend><%= controller.action_name.capitalize %> Employee</legend>
+
+      <%= f.input :first_name, :label => "First Name" %>
+      <%= f.input :last_name, :label => "Last Name" %>
+      <%= f.input :ssn, :label => "SSN" %>
+      <%= f.input :date_of_birth, :label => "Date of Birth", :as => :date, :order => [:month, :day, :year], :start_year => Date.today.year - 50, :end_year => Date.today.year - 20 %>
+      <%= f.input :phone %>
+      <%= f.input :role, :collection => Employee::ROLES_LIST %>
+      <%= f.input :active %>
+
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', employees_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %>

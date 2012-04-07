@@ -1,0 +1,26 @@
+<h1>Shifts</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Assignment</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shifts.each do |shift| %>
+      <tr>
+        <td><%= shift.id %></td>
+        <td><%= link_to shift.assignment_id, shift_path(shift) %></td>
+        <td><%= shift.created_at %></td>
+        <td>
+          <%= link_to 'Edit', edit_shift_path(shift), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', shift_path(shift), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_shift_path, :class => 'btn btn-primary' %>

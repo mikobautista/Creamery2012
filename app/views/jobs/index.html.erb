@@ -1,0 +1,26 @@
+<h1>Jobs</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @jobs.each do |job| %>
+      <tr>
+        <td><%= job.id %></td>
+        <td><%= link_to job.name, job_path(job) %></td>
+        <td><%= job.created_at %></td>
+        <td>
+          <%= link_to 'Edit', edit_job_path(job), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', job_path(job), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_job_path, :class => 'btn btn-primary' %>
