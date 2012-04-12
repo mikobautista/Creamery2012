@@ -1,5 +1,7 @@
 class ShiftsController < ApplicationController
 
+  #before_filter :check_login
+
  def index
     # get all the data on current shifts in the system, 10 per page
     @shifts = Shift.chronological.paginate(:page => params[:page]).per_page(10)

@@ -1,5 +1,7 @@
 class EmployeesController < ApplicationController
 
+  #before_filter :check_login
+
   def index
     # get all the data on employees in the system, 10 per page
     @employees = Employee.active.alphabetical.paginate(:page => params[:page]).per_page(10)
@@ -19,7 +21,7 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    @Employee = Employee.new(params[:employee])
+    @employee = Employee.new(params[:employee])
     if @employee.save
       flash[:notice] = "Successfully created employee."
       redirect_to @employee

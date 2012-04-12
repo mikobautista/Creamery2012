@@ -1,15 +1,30 @@
-<%= simple_form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
-  <fieldset>
-    <legend><%= controller.action_name.capitalize %> User</legend>
-    
-      <%= f.input :employee_id, :label => "Employee ID", :as => :integer %>
-      <%= f.input :email, :label => "Email", :as => :string %>
-      <%= f.input :password_digest, :label => "Password Digest", :as => :string %>
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-
-    <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', users_path, :class => 'btn' %>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
     </div>
-  </fieldset>
+  <% end %>
+  <div class="field">
+    <%= f.label :employee_id %><br />
+    <%= f.collection_select :employee_id, Employee.active.alphabetical, :id, :name, :prompt => "Select ..." %>
+  </div>
+  <div class="field">
+    <%= f.label :email, "Email Address" %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirm Password" %><br />
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div class="actions"><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></div>
 <% end %>

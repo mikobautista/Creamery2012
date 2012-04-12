@@ -2,22 +2,22 @@
 
 <p>
   <b>Store</b><br>
-  <%= @assignment.store_id %>
+  <%= @assignment.store.name %>
 </p>
 
 <p>
   <b>Employee</b><br>
-  <%= @assignment.employee_id %>
+  <%= @assignment.employee.name %>
 </p>
 
 <p>
-  <b>Start date</b><br>
-  <%= @assignment.start_date %>
+  <b>Start Date</b><br>
+  <%= @assignment.start_date.strftime("%B %-d, %Y") %>
 </p>
 
 <p>
-  <b>End date</b><br>
-  <%= @assignment.end_date %>
+  <b>End Date</b><br>
+  <%= @assignment.end_date.nil? ? "Ongoing" : @assignment.end_date.strftime("%B %-d, %Y") %>
 </p>
 
 <p>

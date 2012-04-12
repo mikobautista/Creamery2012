@@ -2,25 +2,28 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Employee</th>
-      <th>Created at</th>
+      <th>Email</th>
+      <th>Role</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= user.id %></td>
-        <td><%= link_to user.employee_id, user_path(user) %></td>
-        <td><%= user.created_at %></td>
-        <td>
+      <td><%= user.employee.name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.employee.role.capitalize %></td>
+      <td>
+          <%= link_to 'View', user_path(user), :class => 'btn btn-mini' %>
           <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini' %>
-          <%= link_to 'Destroy', user_path(user), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-        </td>
+          <%= link_to 'Delete', user_path(user), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+      </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to 'New', new_user_path, :class => 'btn btn-primary' %>
+<br />
+
+<%= link_to 'New User', new_user_path %>

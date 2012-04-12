@@ -4,7 +4,7 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Created at</th>
+      <th>Active</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -12,11 +12,12 @@
     <% @jobs.each do |job| %>
       <tr>
         <td><%= job.id %></td>
-        <td><%= link_to job.name, job_path(job) %></td>
-        <td><%= job.created_at %></td>
+        <td><%= job.name %></td>
+        <td><%= job.active ? "Yes" : "No" %></td>
         <td>
+          <%= link_to 'View', job_path(job), :class => 'btn btn-mini' %>
           <%= link_to 'Edit', edit_job_path(job), :class => 'btn btn-mini' %>
-          <%= link_to 'Destroy', job_path(job), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+          <%= link_to 'Delete', job_path(job), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
         </td>
       </tr>
     <% end %>

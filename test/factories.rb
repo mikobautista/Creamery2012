@@ -26,4 +26,13 @@ FactoryGirl.define do
     end_date 1.month.ago.to_date
     pay_level 1
   end
+  
+  factory :shift do
+    association :assignment
+    date 1.month.ago.to_date
+    start_time 5.hours.ago
+    end_time 2.hours.ago
+    notes "Default Note"
+  end
+  
 end

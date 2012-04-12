@@ -1,5 +1,7 @@
 class StoresController < ApplicationController
 
+  #before_filter :check_login
+
   def index
     # get all the data on stores in the system, 10 per page
     @stores = Store.active.alphabetical.paginate(:page => params[:page]).per_page(10)

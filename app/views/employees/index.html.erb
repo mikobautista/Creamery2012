@@ -3,8 +3,9 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Name</th>
-      <th>Created at</th>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Active</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -12,11 +13,13 @@
     <% @employees.each do |employee| %>
       <tr>
         <td><%= employee.id %></td>
-        <td><%= link_to employee.name, employee_path(employee) %></td>
-        <td><%= employee.created_at %></td>
+        <td><%= employee.last_name %></td>
+        <td><%= employee.first_name %></td>
+        <td><%= employee.active ? "Yes" : "No" %></td>
         <td>
+          <%= link_to 'View', employee_path(employee), :class => 'btn btn-mini' %>
           <%= link_to 'Edit', edit_employee_path(employee), :class => 'btn btn-mini' %>
-          <%= link_to 'Destroy', employee_path(employee), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+          <%= link_to 'Delete', employee_path(employee), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
         </td>
       </tr>
     <% end %>

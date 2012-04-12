@@ -2,12 +2,12 @@
   <fieldset>
     <legend><%= controller.action_name.capitalize %> Shift</legend>
 
-      <%= f.input :assignment_id, :label => "Assignment ID", :as => :integer %>
+
+      <%= f.input :assignment_id, :label => "Assignment", :collection => Assignment.current.chronological.map{|a| a.id} %>
       <%= f.input :date, :label => "Date", :as => :date, :order => [:month, :day, :year], :start_year => Date.today.year - 20, :end_year => Date.today.year %>
       <%= f.input :start_time, :label => "Start Time", :as => :time %>
-      <%= f.input :end_time, :label => "End Time", :as => :time %>
       <%= f.input :notes, :label => "Notes", :as => :text %>
-                
+
     <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to 'Cancel', shifts_path, :class => 'btn' %>

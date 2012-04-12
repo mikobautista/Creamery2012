@@ -1,42 +1,60 @@
 <h1>Employee</h1>
-
+<br>
 <p>
-  <b>First name</b><br>
-  <%= @employee.first_name %>
+  <b>Name:</b>
+  <%=h @employee.name %>
+<p>
+  <b>Phone:</b>
+  <%= @employee.phone.insert(3,"-").insert(7,"-")%>
 </p>
 
 <p>
-  <b>Last name</b><br>
-  <%= @employee.last_name %>
+  <b>Role: </b>
+  <%= @employee.role.capitalize %>
 </p>
 
 <p>
-  <b>Ssn</b><br>
+  <b>Date of Birth: </b>
+  <%= @employee.date_of_birth.strftime("%B %-d, %Y") %>
+</p>
+
+<p>
+  <b>SSN: </b>
   <%= @employee.ssn %>
 </p>
 
 <p>
-  <b>Date of birth</b><br>
-  <%= @employee.date_of_birth %>
+  <b>Active: </b>
+  <%= @employee.active ? 'Yes' : 'No' %>
 </p>
 
-<p>
-  <b>Phone</b><br>
-  <%= @employee.phone %>
+<br>
+<br>
 </p>
-
-<p>
-  <b>Role</b><br>
-  <%= @employee.role %>
+  <h3>Assignment History:</h3>
 </p>
-
-<p>
-  <b>Active</b><br>
-  <%= @employee.active %>
-</p>
-
-<div class="form-actions">
-  <%= link_to 'Back', employees_path, :class => 'btn'  %>
-  <%= link_to 'Edit', edit_employee_path(@employee), :class => 'btn' %>
-  <%= link_to 'Delete', employee_path(@employee), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
-</div>
+<br>
+  
+<table class="table table-striped">
+  <thead>
+    <th>Store Name</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th>Pay Level</th>
+    <th>Actions</th>
+  </thead>
+  <tbody
+  </tr>
+<% @employee.assignments.each do|assignment| %>
+  <tr>
+    <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
+    <td><%= assignment.start_date.strftime("%B %-d, %Y") %></td>
+    <td><%= assignment.end_date.nil? ? "Ongoing" : assignment.end_date.strftime("%B %-d, %Y") %></td>
+    <td><%= assignment.pay_level %></td>
+    <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+<br />
+<p><%= link_to 'New Assignment', new_assignment_path, :class => 'btn btn-primary' %></p>

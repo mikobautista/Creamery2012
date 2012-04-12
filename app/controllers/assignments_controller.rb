@@ -1,5 +1,7 @@
 class AssignmentsController < ApplicationController
 
+  #before_filter :check_login
+
   def index
     # get all the data on current assignments in the system, 10 per page
     @assignments = Assignment.current.chronological.paginate(:page => params[:page]).per_page(10)

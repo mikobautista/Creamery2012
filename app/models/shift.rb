@@ -1,14 +1,13 @@
 class Shift < ActiveRecord::Base
   
-  # create a callback that will call set_end_time before create
-  before_create :set_end_time
-  
   # Relationships
   # -----------------------------
   belongs_to :assignment
   has_many :shift_jobs
   has_many :jobs, :through => :shift_jobs
-
+  has_one :store, :through => :assignment
+  has_one :employee, :through => :assignment
+  
   # Validations
   # -----------------------------
   # make sure required fields are present
@@ -18,45 +17,43 @@ class Shift < ActiveRecord::Base
   validates_numericality_of :assignment_id, :only_integer => true, :greater_than => 0
 
   # ensure start time is before end time and not nil
-  validates_time :start_time, :before => :end_time, :allow_nil => false
+  validates_time :start_time, :allow_nil => false
   
   # ensure end time is after start time
   validates_time :end_time, :after => :start_time, :allow_nil => true
-  
-  # make sure the assignment selected is one that is active
-  validate :assignment_is_active_in_system
-  
+
   # Scopes
   # -----------------------------
-  # returns shifts of certain assignment
-  scope :for_assignment, lambda {|assignment_id| where("assignment_id = ?", assignment_id) }
   
   # returns shifts in chronological order
   scope :chronological, order('date, start_time, end_time')
   
   # returns all shifts in the system that have at least one job associated with them
-  scope :completed, joins(:shiftjobs).where('job_id IS NOT NULL')
+  scope :completed, Shift.all.collect{|x| x if x.jobs.count >= 1}
   
   # returns all shifts in the system that have do not have at least one job associated with the
-  scope :incomplete, joins(:shiftjobs).where('job_id IS NULL')
+  scope :incomplete, Shift.all.collect{|x| x if x.jobs.count < 1}
   
   # returns all shifts that are associated with a given store
-  scope :for_store, lambda {|store_id| where("store_id = ?", store_id) }
+  scope :for_store, lambda {|store_id| joins(:assignment).where('store_id = ?', store_id) }
   
   # returns all shifts that are associated with a given employee
-  scope :for_employee, lambda {|employee_id| where("employee_id = ?", employee_id) }
+  scope :for_employee, lambda { |employee_id| joins(:assignment).where('employee_id = ?', employee_id) }
+
+  # returns shifts of certain assignment
+  scope :for_assignment, lambda {|assignment_id| where("assignment_id = ?", assignment_id) }
   
   # returns all shifts which have a date in the past
-  scope :past, where("date < ?", Date.today)
+  scope :past, where('date < ?', Date.today)
   
   # returns all shifts which have a date in the present or future
-  scope :upcoming, where("date >= ?", Date.today)
+  scope :upcoming, where('date >= ?', Date.today)
   
   # returns all the upcoming shifts in the next 'x' days 
-  scope :for_next_days, lambda {|x| where("date >= ? AND date <= ?", Date.today, Date.today + x.days) }
+  scope :for_next_days, lambda { |x|  Shift.find(:all, :conditions => [ "date <= ?", Date.today + x] ) }
   
   # returns all the past shifts in the previous 'x' days
-  scope :for_past_days, lambda {|x| where("date <= ? AND date >= ?", Date.today, Date.today - x.days) }
+  scope :for_past_days, lambda { |x|  Shift.find(:all, :conditions => [ "date <= ?", Date.today + x] ) }
 
   # orders values by store  
   scope :by_store, joins(:store).order('name')
@@ -74,26 +71,5 @@ class Shift < ActiveRecord::Base
       return true
     end
   end
-  
-  # Callback Methods
-  # -----------------------------
-  private
-  def set_end_time
-    self.end_time = self.start_time + 3.hours
-  end
-=begin
-  # Private methods used to execute the custom validations
-  # -----------------------------
-  private
-  def assignment_is_active_in_system
-    # get an array of all assignment ids
-    possible_assignment_ids = Assignment.active.all.map{|a| a.id}
-    # add error unless the assignment id is in the array of possible ids
-    unless possible_assignment_ids.include?(self.assignment_id)
-      errors.add(:assignment_id, "is not an active assignment")
-      return false
-    end
-    return true
-  end
-=end  
+
 end

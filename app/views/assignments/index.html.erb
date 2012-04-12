@@ -3,20 +3,21 @@
   <thead>
     <tr>
       <th>ID</th>
+      <th>Employee</th>
       <th>Store</th>
-      <th>Created at</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <% @assignments.each do |assignment| %>
+    <% @assignments.by_store.by_employee.each do |assignment| %>
       <tr>
-        <td><%= link_to assignment.id, assignment_path(assignment) %></td>
-        <td><%= assignment.store.name %></td>
-        <td><%= assignment.created_at %></td>
+        <td><%= assignment.id %></td>
+        <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
+        <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
         <td>
+          <%= link_to 'View', assignment_path(assignment), :class => 'btn btn-mini' %>
           <%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini' %>
-          <%= link_to 'Destroy', assignment_path(assignment), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+          <%= link_to 'Delete', assignment_path(assignment), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
         </td>
       </tr>
     <% end %>

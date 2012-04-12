@@ -2,27 +2,27 @@
 
 <p>
   <b>Assignment</b><br>
-  <%= @shift.assignment_id %>
+  <%= @shift.assignment.employee.last_name + " @ " + @shift.assignment.store.name %>
 </p>
 
 <p>
   <b>Date</b><br>
-  <%= @shift.date %>
+  <%= @shift.date.strftime("%B %-d, %Y") %>
 </p>
 
 <p>
   <b>Start time</b><br>
-  <%= @shift.start_time %>
+  <%= @shift.start_time.strftime("%l:%M%P") %>
 </p>
 
 <p>
   <b>End time</b><br>
-  <%= @shift.end_time %>
+  <%= @shift.end_time.strftime("%l:%M%P") %>
 </p>
 
 <p>
   <b>Notes</b><br>
-  <%= @shift.notes %>
+  <%= (@shift.notes == "") ? "None" : @shift.notes %>
 </p>
 
 <div class="form-actions">

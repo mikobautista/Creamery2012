@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Creamery2012</title>
+  <title>A&M Creamery :: <%= controller.controller_name.capitalize %> - <%= controller.action_name.capitalize %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -17,7 +17,7 @@
 	  <span class="icon-bar"></span>
 	  <span class="icon-bar"></span>
 	</a>
-	<a class="brand" href="#">Creamery2012</a>
+	<a class="brand" href="/">Creamery</a>
 	<div class="nav-collapse">
 	  <ul class="nav">
 	    <li><%= link_to "Employees", employees_path %></li>
@@ -31,7 +31,6 @@
       </div>
     </div>
   </div>
-
   <!-- MAIN CONTENT HERE -->
   <div class="container">
     
@@ -50,12 +49,16 @@
       <!-- quick links on the side in the one-third section -->
       <div class="span4">
 	<%= render :partial => "partials/quick_links" %>
+	<% if logged_in? %>
+	  <%= link_to 'Logout', logout_path %>
+	  <br>[<%= current_user.employee.last_name %> : <%= current_user.employee.role.capitalize %>]
+	<% else %>
+	  <%= link_to 'Login', login_path %>
+	<% end %>
       </div>
     </div>
   </div>
 
-
-    
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">

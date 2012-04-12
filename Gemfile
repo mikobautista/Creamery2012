@@ -9,6 +9,7 @@ gem 'cancan'
 gem 'validates_timeliness'
 gem 'geokit'
 gem 'jquery-rails'
+gem "bcrypt-ruby", :require => "bcrypt"
 
 # Gems used only in development
 group :development do
@@ -59,7 +60,3 @@ end
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-
-# To use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.0'
-

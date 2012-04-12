@@ -4,7 +4,9 @@
     <tr>
       <th>ID</th>
       <th>Assignment</th>
-      <th>Created at</th>
+      <th>Date</th>
+      <th>Start Time</th>
+      <th>End Time</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -12,11 +14,14 @@
     <% @shifts.each do |shift| %>
       <tr>
         <td><%= shift.id %></td>
-        <td><%= link_to shift.assignment_id, shift_path(shift) %></td>
-        <td><%= shift.created_at %></td>
+        <td><%= link_to shift.assignment.employee.last_name + " @ " + shift.assignment.store.name, assignment_path(shift.assignment_id) %></td>
+        <td><%= shift.date.strftime("%B %-d, %Y") %></td>
+        <td><%= shift.start_time.strftime("%l:%M%P") %></td>
+        <td><%= shift.end_time.strftime("%l:%M%P") %></td>
         <td>
+          <%= link_to 'View', shift_path(shift), :class => 'btn btn-mini' %>
           <%= link_to 'Edit', edit_shift_path(shift), :class => 'btn btn-mini' %>
-          <%= link_to 'Destroy', shift_path(shift), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+          <%= link_to 'Delete', shift_path(shift), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
         </td>
       </tr>
     <% end %>
