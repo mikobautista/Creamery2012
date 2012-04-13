@@ -4,8 +4,13 @@ class EmployeesController < ApplicationController
   authorize_resource
   
   def index
-    # get all the data on employees in the system, 10 per page
-    @employees = Employee.alphabetical.paginate(:page => params[:page]).per_page(10)
+    if current_user.employee.role? == 'admin'
+      @employees = Employee.alphabetical.paginate(:page => params[:page]).per_page(10)
+    elsif current_user.employee.role? == 'manager'
+      @employees = Employee.for_store(current_user.employee.current_assignment.store.id).where('end_date IS NULL').paginate(:page => params[:page]).per_page(10)
+    else
+      @employees = nil
+    end
   end
 
   def show

@@ -1,11 +1,32 @@
 <% if !logged_in? %>
 <h1>Welcome to Creamery</h1>
-
+<br>
 <p>If you have yet to try our ice cream, head down to
 one of our shops ASAP and fall in love with our exclusive
 ice cream flavors!
-
 </p>
+
+<h2>Our Store Listing</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stores.each do |store| %>
+      <tr>
+        <td><%= store.name %></td>
+        <td><%= store.phone.insert(3,"-").insert(7,"-") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Store Locations<h3>
+  <%= image_tag @stores.last.create_active_stores_map_link %>
+  
 <% end %>
 
 <% if logged_in? %>
@@ -23,6 +44,5 @@ ice cream flavors!
   <% if current_user.employee.role? == "employee" %>
     <%= render :partial => "partials/employee_dashboard" %>
   <% end %>
-
 
 <% end %>

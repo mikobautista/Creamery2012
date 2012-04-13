@@ -1,0 +1,13 @@
+  <div class="control-group">
+    <%= f.label :job_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :job_id, Job.active.alphabetical, :id, :name, :prompt => "" %>
+      </div>
+  </div>
+  
+  <div class="control-group">
+    <div class="controls">
+      <%= f.hidden_field :shift_id, :value => @shift.id %>
+      <%#= f.text_field :shift_id, :class => 'text_area', :value => @shift.id %>
+    </div>
+  </div>

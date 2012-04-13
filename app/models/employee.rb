@@ -27,6 +27,7 @@ class Employee < ActiveRecord::Base
   scope :admins, where('role = ?', 'admin')
   scope :alphabetical, order('last_name, first_name')
   scope :search, lambda { |term| where('first_name LIKE ? OR last_name LIKE ?', "#{term}%", "#{term}%") }
+  scope :for_store, lambda { |x| joins(:assignments).where("store_id = ?", x) }
   
   # Other methods
   def name

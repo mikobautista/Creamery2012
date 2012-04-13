@@ -36,10 +36,6 @@
 </p>
 
 <p>
-  <b>Total Hours</b><br>
-  <%= @store.employee_hours %>
-</p>
-<p>
 <p>
   <b>Map</b><br>
   <%= image_tag @store.create_map_link %>
@@ -72,7 +68,9 @@
       <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
       <td><%= assignment.employee.role.capitalize %></td>
       <td><%= assignment.employee.phone.insert(3,"-").insert(7,"-") %></td>
-      <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %></td>
+      <td>
+        <%= link_to 'Edit', edit_employee_path(assignment.employee), :class => 'btn btn-mini'  %>
+        <%= link_to 'Delete', employee_path(assignment.employee), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger btn-mini' %>
     </tr>
   <% end %>
   </tbody>

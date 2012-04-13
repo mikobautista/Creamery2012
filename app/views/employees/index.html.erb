@@ -2,20 +2,22 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Last Name</th>
       <th>First Name</th>
-      <th>Active</th>
+      <% if current_user.employee.role? == "admin" %>
+        <th>Active</th>
+      <% end %>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @employees.each do |employee| %>
       <tr>
-        <td><%= employee.id %></td>
         <td><%= employee.last_name %></td>
         <td><%= employee.first_name %></td>
-        <td><%= employee.active ? "Yes" : "No" %></td>
+        <% if current_user.employee.role? == "admin" %>
+          <td><%= employee.active ? "Yes" : "No" %></td>
+        <% end %>
         <td>
           <%= link_to 'View', employee_path(employee), :class => 'btn btn-mini' %>
           <%= link_to 'Edit', edit_employee_path(employee), :class => 'btn btn-mini' %>

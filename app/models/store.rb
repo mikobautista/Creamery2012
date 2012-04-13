@@ -41,7 +41,7 @@ class Store < ActiveRecord::Base
     map = "http://maps.google.com/maps/api/staticmap?center=#{latitude},#{longitude}&zoom=#{zoom}&size=#{width}x#{height}&maptype=roadmap&markers=color:red%7Ccolor:red%7C#{latitude},#{longitude}&sensor=false"
   end
   
-  def create_active_stores_map_link(zoom=13,width=400,height=400)
+  def create_active_stores_map_link(zoom=13,width=800,height=800)
     markers = ''
     i = 1
     Store.active.each do |store|
@@ -63,7 +63,7 @@ class Store < ActiveRecord::Base
   end
   
   def find_store_coordinates
-    coord = Geokit::Geocoders::GoogleGeocoder.geocode "#{name}, #{state}"
+    coord = Geokit::Geocoders::GoogleGeocoder.geocode "#{street}, #{city}, #{zip} #{state}"
     if coord.success
       self.latitude, self.longitude = coord.ll.split(',')
     else

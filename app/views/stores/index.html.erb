@@ -2,7 +2,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Name</th>
       <th>Active</th>
       <th>Actions</th>
@@ -11,7 +10,6 @@
   <tbody>
     <% @stores.each do |store| %>
       <tr>
-        <td><%= store.id %></td>
         <td><%= store.name %></td>
         <td><%= store.active ? "Yes" : "No" %></td>
         <td>

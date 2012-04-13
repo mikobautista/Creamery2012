@@ -2,17 +2,15 @@
     <table class="table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>No. of Current Employees</th>
-        <th>Employee Hours</th>
+        <th>No. Of Hours Worked</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <% @stores.each do |store| %>
         <tr>
-          <td><%= store.id %> </td>
           <td><%= link_to store.name, store_path(store) %></td>
           <td><%= store.assignments.current.count %></td>
           <td><%= store.employee_hours %> </td>
@@ -28,7 +26,6 @@
     <table class="table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>Store</th>
         <th>No. of Hours Worked</th>
@@ -37,10 +34,9 @@
     <tbody>
       <% @top_employees.each do |employee| %>
         <tr>
-          <td><%= employee.id %> </td>
           <td><%= link_to employee.name, employee_path(employee) %></td>
-          <td><%= link_to employee.current_assignment.store.name, store_path(employee.current_assignment.store) %></td>
-          <td><%= employee.assignment_hours %></td>
+            <td><%= employee.current_assignment.nil? ? "Not Currently Assigned" : (link_to employee.current_assignment.store.name, store_path(employee.current_assignment.store)) %></td>
+            <td><%= employee.assignment_hours %></td>
         </tr>
       <% end %>
     </tbody>

@@ -1,8 +1,13 @@
 <h1>Shift</h1>
 
 <p>
-  <b>Assignment</b><br>
-  <%= @shift.assignment.name %>
+  <b>Employee</b><br>
+  <%= @shift.assignment.employee.name %>
+</p>
+
+<p>
+  <b>Store</b><br>
+  <%= @shift.assignment.store.name %>
 </p>
 
 <p>
@@ -19,15 +24,27 @@
   <b>End time</b><br>
   <%= @shift.end_time.nil? ? "Ongoing" : @shift.end_time.strftime("%l:%M%P") %>
 </p>
-<p>
-  <b>Total Hours</b><br>
-  <%= @shift.time_worked_in_hours %>
-</p>
+
 <p>
 <p>
   <b>Notes</b><br>
   <%= (@shift.notes == "") ? "None" : @shift.notes %>
 </p>
+
+<% if @shiftjobs.empty? %>
+  <b>No Jobs Assigned</b>
+<% end %>
+
+<% if not @shiftjobs.empty? %>
+<p>
+  <b>Jobs for this Shift</b>
+  <ol>
+    <% for shiftjob in @shiftjobs %>
+      <li><%= link_to shiftjob.job.name, job_path(shiftjob.job) %></li>
+    <% end %>
+  </ol>
+</p>
+<% end %>
 
 <div class="form-actions">
   <%= link_to 'Back', shifts_path, :class => 'btn'  %>

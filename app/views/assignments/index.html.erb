@@ -2,7 +2,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Employee</th>
       <th>Store</th>
       <th>Current</th>
@@ -12,7 +11,6 @@
   <tbody>
     <% @assignments.each do |assignment| %>
       <tr>
-        <td><%= assignment.id %></td>
         <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
         <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
         <td><%= assignment.end_date.nil? ? "Yes" : "No" %></td>

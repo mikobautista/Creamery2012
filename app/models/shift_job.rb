@@ -10,6 +10,8 @@ class ShiftJob < ActiveRecord::Base
   # -----------------------------
   validate :shift_end_time_passed
 
+  scope :by_job, joins(:job).order('name')
+  
   # Callback Methods
   # -----------------------------
   # make sure shift end time passed before creating
@@ -27,14 +29,5 @@ class ShiftJob < ActiveRecord::Base
       return false
     end
  end
-  
-  #def shift_end_time_passed
-  #  if self.shift.nil? || self.job.nil?
-  #    return false
-  #  end
-  #  if self.shift.end_time < Time.now
-  #    errors.add(:job_id, "cannot be added to unfinished shift")
-  #  end
-  #end  
 
 end

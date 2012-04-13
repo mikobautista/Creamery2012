@@ -18,14 +18,13 @@ class Ability
       end
 
     elsif user.role == "employee"
+      can :manage, :all
       can :read, Shift do |shift|
         shift.id == user.employee.assignment.shift.id
       end
       can :update, Shift do |shift|
         shift.id == user.employee.assignment.shift.id
       end
-    else
-      can :read, :all
     end
   end
   

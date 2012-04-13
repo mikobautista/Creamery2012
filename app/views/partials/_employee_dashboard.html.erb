@@ -28,73 +28,74 @@
   <%= current_user.employee.active ? 'Yes' : 'No' %>
 </p>
 
-<% if current_user.employee.current_assignment.shifts.for_past_days(14).empty? %>
-  <h3>No Past Shifts</h3>
+<% if current_user.employee.current_assignment.nil? %>
+  <h4>No Current Assignment</h4>
 <% end %>
 
-<% if not current_user.employee.current_assignment.shifts.for_past_days(14).empty? %>
-  <br>
-  <br>
-  </p>
-    <h3>Past Shifts:</h3>
-  </p>
-  <table class="table table-striped">
-    <thead>
-      <th>Store</th>
-      <th>Date</th>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Actions</th>
-    </thead>
-    <tbody
-    </tr>
-  <% current_user.employee.current_assignment.shifts.for_past_days(14).each do|shift| %>
-    <tr>
-      <td><%= shift.assignment.store.name %></td>
-      <td><%= shift.date.strftime("%B %-d, %Y") %></td>
-      <td><%= shift.start_time.strftime("%l:%M%P") %></td>
-      <td><%= shift.end_time.strftime("%l:%M%P") %></td>
-      <td><%= link_to 'View', shift_path(shift), :class => 'btn btn-mini'  %></td>
-    </tr>
+<% if not current_user.employee.current_assignment.nil? %>
+  <% if current_user.employee.current_assignment.shifts.for_past_days(14).empty? %>
+    <h3>No Past Shifts</h3>
   <% end %>
-  </tbody>
-  </table>
-<% end %>
-
-<br>
   
-<% if current_user.employee.current_assignment.shifts.for_next_days(14).empty? %>
-  <h3>No Upcoming Shifts</h3>
-<% end %>
-
-<% if not current_user.employee.current_assignment.shifts.for_next_days(14).empty? %>
-  <br>
-  <br>
-  </p>
-    <h3>Upcoming Shifts:</h3>
-  </p>
-  <br>
-  <table class="table table-striped">
-    <thead>
-      <th>Store</th>
-      <th>Date</th>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Actions</th>
-    </thead>
-    <tbody
-    </tr>
-  <% current_user.employee.current_assignment.shifts.upcoming.each do|shift| %>
-    <tr>
-      <td><%= shift.assignment.store.name %></td>
-      <td><%= shift.date.strftime("%B %-d, %Y") %></td>
-      <td><%= shift.start_time.strftime("%l:%M%P") %></td>
-      <td><%= shift.end_time.strftime("%l:%M%P") %></td>
-      <td><%= link_to 'View', shift_path(shift), :class => 'btn btn-mini'  %></td>
-    </tr>
+  <% if not current_user.employee.current_assignment.shifts.for_past_days(14).empty? %>
+    <br>
+    <br>
+    </p>
+      <h3>Past Shifts:</h3>
+    </p>
+    <table class="table table-striped">
+      <thead>
+        <th>Store</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Actions</th>
+      </thead>
+      <tbody
+      </tr>
+    <% current_user.employee.current_assignment.shifts.for_past_days(14).each do|shift| %>
+      <tr>
+        <td><%= shift.assignment.store.name %></td>
+        <td><%= shift.date.strftime("%B %-d, %Y") %></td>
+        <td><%= shift.start_time.strftime("%l:%M%P") %></td>
+        <td><%= shift.end_time.strftime("%l:%M%P") %></td>
+        <td><%= link_to 'View', shift_path(shift), :class => 'btn btn-mini'  %></td>
+      </tr>
+    <% end %>
+    </tbody>
+    </table>
   <% end %>
-  </tbody>
-  </table>
+    
+  <% if current_user.employee.current_assignment.shifts.for_next_days(14).empty? %>
+    <h3>No Upcoming Shifts</h3>
+  <% end %>
+  
+  <% if not current_user.employee.current_assignment.shifts.for_next_days(14).empty? %>
+    <br>
+    </p>
+      <h3>Upcoming Shifts</h3>
+    </p>
+    <table class="table table-striped">
+      <thead>
+        <th>Store</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Actions</th>
+      </thead>
+      <tbody
+      </tr>
+    <% current_user.employee.current_assignment.shifts.upcoming.each do|shift| %>
+      <tr>
+        <td><%= shift.assignment.store.name %></td>
+        <td><%= shift.date.strftime("%B %-d, %Y") %></td>
+        <td><%= shift.start_time.strftime("%l:%M%P") %></td>
+        <td><%= shift.end_time.strftime("%l:%M%P") %></td>
+        <td><%= link_to 'View', shift_path(shift), :class => 'btn btn-mini'  %></td>
+      </tr>
+    <% end %>
+    </tbody>
+    </table>
+  <% end %>
 <% end %>
-
 <br>

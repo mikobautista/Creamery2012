@@ -2,8 +2,10 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Assignment</th>
+      <th>Employee</th>
+      <% if current_user.employee.role? == "admin" %>
+        <th>Store</th>
+      <% end %>
       <th>Date</th>
       <th>Start Time</th>
       <th>End Time</th>
@@ -13,8 +15,10 @@
   <tbody>
     <% @shifts.each do |shift| %>
       <tr>
-        <td><%= shift.id %></td>
-        <td><%= link_to shift.assignment.name, assignment_path(shift.assignment_id) %></td>
+        <td><%= link_to shift.assignment.employee.name, employee_path(shift.assignment.employee.id) %></td>
+        <% if current_user.employee.role? == "admin" %>
+          <td><%= link_to shift.assignment.store.name, store_path(shift.assignment.store.id) %></td>
+        <% end %>
         <td><%= shift.date.strftime("%B %-d, %Y") %></td>
         <td><%= shift.start_time.strftime("%l:%M%P") %></td>
         <td><%= shift.end_time.nil? ? "Ongoing" : shift.end_time.strftime("%l:%M%P") %></td>

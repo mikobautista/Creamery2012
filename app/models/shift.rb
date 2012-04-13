@@ -10,6 +10,8 @@ class Shift < ActiveRecord::Base
   has_one :store, :through => :assignment
   has_one :employee, :through => :assignment
   
+  accepts_nested_attributes_for :shift_jobs, :reject_if => lambda {|shiftjob| shiftjob[:job_id].blank?}
+  
   # Validations
   # -----------------------------
   # make sure required fields are present
@@ -23,10 +25,9 @@ class Shift < ActiveRecord::Base
   
   # ensure end time is nil after creation, and after start time after updating
   validates_time :end_time, :on => :create, :allow_nil => true, :allow_blank => true
-  validates_time :end_time, :on => :update, :after => :start_time, :after_message => "cannot be before start time", :before_message => "cannot be in the future", :before => Time.now
-
+  #validates_time :end_time, :on => :update, :before => Time.now, :after => :start_time, :before_message => "cannot be in the future", :after_message => "cannot be before/during start time"
   # make sure the assignment selected is one that is active
-  #validate :assignment_is_active_in_system
+  validate :assignment_is_current
 
   # Scopes
   # -----------------------------
@@ -59,7 +60,7 @@ class Shift < ActiveRecord::Base
   scope :for_past_days, lambda {|num| where('date >= ? AND date < ?', num.days.ago.to_date, Date.current)}
 
   # returns shifts in chronological order
-  scope :chronological, order('date, start_time, end_time')
+  scope :chronological, order('date DESC')
 
   # orders values by store  
   scope :by_store, joins(:store).order('name')
@@ -84,22 +85,32 @@ class Shift < ActiveRecord::Base
     return ((self.end_time.hour * 60 + self.end_time.min) - (self.start_time.hour * 60 + self.start_time.min)) / 60
   end
   
+  def end_time_is_not_in_future
+    if self.date < Date.today
+      return true
+    elsif self.date == Date.today
+      return self.start_time < self.end_time_is_not_in_future
+    else
+      return false
+    end
+  end
+  
   # Private methods used to execute the custom validations
   # -----------------------------
   private
-  def assignment_is_active_in_system
+  def assignment_is_current
     # get an array of all employee ids
     possible_assignment_ids = Assignment.current.all.map{|a| a.id}
     # add error unless the employee id is in the array of possible ids
     unless possible_assignment_ids.include?(self.assignment_id)
-      errors.add(:assignment_id, "is not an active assignment")
+      errors.add(:assignment_id, "is not a current assignment")
       return false
     end
     return true
   end
 
   def set_end_time
-    self.end_time = self.start_time + 3.hours
+    self.end_time = self.start_time + 3.hours if self.end_time.blank?
   end
 
 end

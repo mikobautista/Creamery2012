@@ -11,6 +11,7 @@ class ShiftsController < ApplicationController
   def show
      # get data on that particular shift
     @shift = Shift.find(params[:id])
+    @shiftjobs = @shift.shift_jobs.by_job
   end
 
   def new

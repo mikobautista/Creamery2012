@@ -41,7 +41,6 @@
   <br>
   <table class="table table-striped">
     <thead>
-      <th>ID</th>
       <th>Store Name</th>
       <th>Start Date</th>
       <th>End Date</th>
@@ -52,12 +51,14 @@
     </tr>
   <% @employee.assignments.each do|assignment| %>
     <tr>
-      <td><%= link_to assignment.id, assignment_path(assignment) %></td>
       <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
       <td><%= assignment.start_date.strftime("%B %-d, %Y") %></td>
       <td><%= assignment.end_date.nil? ? "Ongoing" : assignment.end_date.strftime("%B %-d, %Y") %></td>
       <td><%= assignment.pay_level %></td>
-      <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %></td>
+      <td>
+        <%= link_to 'View', assignment_path(assignment), :class => 'btn btn-mini'  %>
+        <%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %>
+      </td>
     </tr>
   <% end %>
   </tbody>
