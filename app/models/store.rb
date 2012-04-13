@@ -37,15 +37,19 @@ class Store < ActiveRecord::Base
     return num_hours
   end
   
-  def find_store_coordinates
-    coord = Geokit::Geocoders::GoogleGeocoder.geocode "#{name}, #{state}"
-    if coord.success
-      self.lat, self.lon = coord.ll.split(',')
-    else
-      errors.add_to_base("Error with geocoding")
-    end
+  def create_map_link(zoom=13,width=400,height=400)
+    map = "http://maps.google.com/maps/api/staticmap?center=#{latitude},#{longitude}&zoom=#{zoom}&size=#{width}x#{height}&maptype=roadmap&markers=color:red%7Ccolor:red%7C#{latitude},#{longitude}&sensor=false"
   end
   
+  def create_active_stores_map_link(zoom=13,width=400,height=400)
+    markers = ''
+    i = 1
+    Store.active.each do |store|
+      markers += "&markers=color:red%7Ccolor:red%7Clabel:#{i}%7C#{store.latitude},#{store.longitude}"
+      i += 1
+    end
+    map = "http://maps.google.com/maps/api/staticmap?zoom=#{zoom}&size=#{width}x#{height}&maptype=roadmap#{markers}&sensor=false"
+  end
   
   # Callback code
   # -----------------------------
@@ -58,6 +62,14 @@ class Store < ActiveRecord::Base
     self.phone = phone       # reset self.phone to new string
   end
   
+  def find_store_coordinates
+    coord = Geokit::Geocoders::GoogleGeocoder.geocode "#{name}, #{state}"
+    if coord.success
+      self.latitude, self.longitude = coord.ll.split(',')
+    else
+      errors.add_to_base("Error with geocoding")
+    end
+  end
 
 end
 

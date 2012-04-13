@@ -40,7 +40,12 @@
   <%= @store.employee_hours %>
 </p>
 <p>
-
+<p>
+  <b>Map</b><br>
+  <%= image_tag @store.create_map_link %>
+</p>
+<p>
+<p>
 <% if @store.assignments.current.empty? %>
   <h3>No Employees</h3>
 <% end %>

@@ -11,7 +11,7 @@ class StoresController < ApplicationController
   def show
      # get data on that particular store
       @store = Store.find(params[:id])
-      @store = Store.allow
+      @stores = Store.all
   end
 
   def new
