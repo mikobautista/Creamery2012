@@ -1,16 +1,26 @@
 <%= simple_form_for @shift, :html => { :class => 'form-horizontal' } do |f| %>
   <fieldset>
     <legend><%= controller.action_name.capitalize %> Shift</legend>
-
-
-      <%= f.input :assignment_id, :label => "Assignment", :collection => Assignment.current.chronological.map{|a| a.id} %>
+      
+      <%= f.input :assignment_id, :label => "Assignment", :collection => Assignment.current.by_employee.by_store.all %>
       <%= f.input :date, :label => "Date", :as => :date, :order => [:month, :day, :year], :start_year => Date.today.year - 20, :end_year => Date.today.year %>
       <%= f.input :start_time, :label => "Start Time", :as => :time %>
+      
+      <% if controller.action_name != "new" %>
+        <% if current_user.employee.role? == "manager" %>
+          <%= f.input :end_time, :label => "End Time", :as => :time, :include_blank => true, :default => nil, :minute_step => 15 %>
+        <% end %>
+        <% if current_user.employee.role? == "admin" %>
+          <%= f.input :end_time, :label => "End Time", :as => :time, :include_blank => true, :default => nil %>
+        <% end %>
+      <% end %>
+      
       <%= f.input :notes, :label => "Notes", :as => :text %>
-
+      
     <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to 'Cancel', shifts_path, :class => 'btn' %>
     </div>
+    
   </fieldset>
 <% end %>

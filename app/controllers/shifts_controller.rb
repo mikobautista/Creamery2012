@@ -1,7 +1,8 @@
 class ShiftsController < ApplicationController
 
-  #before_filter :check_login
-
+  before_filter :check_login
+  authorize_resource
+  
  def index
     # get all the data on current shifts in the system, 10 per page
     @shifts = Shift.chronological.paginate(:page => params[:page]).per_page(10)
@@ -13,7 +14,15 @@ class ShiftsController < ApplicationController
   end
 
   def new
-    @shift = Shift.new
+    if params[:assignment_id]
+      @shift = Shift.new(:assignment_id => params[:assignment_id])
+    else
+      @shift = Shift.new
+    end
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @shift }
+    end
   end
 
   def edit
@@ -34,7 +43,7 @@ class ShiftsController < ApplicationController
     @shift = Shift.find(params[:id])
     if @shift.update_attributes(params[:shift])
       flash[:notice] = "Successfully updated shift."
-      redirect_to @shift
+      redirect_to shift_path(@shift)
     else
       render :action => 'edit'
     end

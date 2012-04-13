@@ -1,0 +1,52 @@
+<h3>Employees in <%= current_user.employee.current_assignment.store.name %></h3> 
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Number of Shift-Hours Worked</th>
+        <th>Date of Last Shift</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employees.each do |employee| %>
+        <% if (not employee.current_assignment.nil?) && (employee.current_assignment.store.id == current_user.employee.current_assignment.store.id) %>
+          <tr>
+            <td><%= link_to employee.name, employee_path(employee) %></td>
+            <td><%= employee.assignment_hours %></td>
+            <td><%= employee.current_assignment.nil? ? "None" : employee.current_assignment.start_date.strftime("%B %-d, %Y") %> </td>
+            <td>
+              <%= link_to 'Assign Shift', new_shift_path(:assignment_id => employee.current_assignment.id), :class => 'btn btn-mini' %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <span class="smtext">
+    <%= will_paginate @employees, :previous_label => "&larr;&nbsp;Previous&nbsp;", :next_label => "&nbsp;Next&nbsp;&rarr;" %>
+  </span>
+
+<h3>Shifts for <%= Date.today.strftime("%B %-d, %Y") %></h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Employee</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @shifts.each do |shift| %>
+        <% if (shift.date == Date.today) && (shift.employee.current_assignment.store == current_user.employee.current_assignment.store) %>
+          <tr>
+            <td><%= link_to shift.assignment.employee.name, employee_path(shift.assignment.employee) %></td>
+            <td><%= shift.start_time.strftime("%l:%M%P") %></td>
+            <td><%= shift.end_time.strftime("%l:%M%P") %></td>
+            <td><%= link_to 'Edit', edit_shift_path(shift), :class => 'btn btn-mini' %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>

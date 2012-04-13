@@ -20,17 +20,22 @@
 	<a class="brand" href="/">Creamery</a>
 	<div class="nav-collapse">
 	  <ul class="nav">
-	    <li><%= link_to "Employees", employees_path %></li>
-	    <li><%= link_to "Stores", stores_path %></li>
-	    <li><%= link_to "Assignments", assignments_path %></li>
-            <li><%= link_to "Shifts", shifts_path %></li>
-            <li><%= link_to "Jobs", jobs_path %></li>
-            <li><%= link_to "Users", users_path %></li>
+	    <li><%= link_to "About Us", home_path('about') %></li>
+	    <li><%= link_to "Contact Us", home_path('contact') %></li>
+	    <li><%= link_to "Privacy Policy", home_path('privacy') %></li>
+	  </ul>
+	  <ul class="nav pull-right">
+	      <% if logged_in? %>
+		<li><%= link_to 'Logout', logout_path %></li>
+	      <% else %>
+		<li><%= link_to 'Login', login_path %></li>
+	      <% end %>
 	  </ul>
 	</div>
       </div>
     </div>
   </div>
+  
   <!-- MAIN CONTENT HERE -->
   <div class="container">
     
@@ -49,12 +54,6 @@
       <!-- quick links on the side in the one-third section -->
       <div class="span4">
 	<%= render :partial => "partials/quick_links" %>
-	<% if logged_in? %>
-	  <%= link_to 'Logout', logout_path %>
-	  <br>[<%= current_user.employee.last_name %> : <%= current_user.employee.role.capitalize %>]
-	<% else %>
-	  <%= link_to 'Login', login_path %>
-	<% end %>
       </div>
     </div>
   </div>

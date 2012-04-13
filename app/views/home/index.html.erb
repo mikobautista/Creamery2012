@@ -1,0 +1,28 @@
+<% if !logged_in? %>
+<h1>Welcome to Creamery</h1>
+
+<p>If you have yet to try our ice cream, head down to
+one of our shops ASAP and fall in love with our exclusive
+ice cream flavors!
+
+</p>
+<% end %>
+
+<% if logged_in? %>
+  <h1>Welcome, <%= current_user.employee.proper_name =%></h1>
+  <br>
+    
+  <% if current_user.employee.role? == "admin" %>
+    <%= render :partial => "partials/admin_dashboard" %>
+  <% end %>
+  
+   <% if current_user.employee.role? == "manager" %>
+    <%= render :partial => "partials/manager_dashboard" %>
+  <% end %>
+  
+  <% if current_user.employee.role? == "employee" %>
+    <%= render :partial => "partials/employee_dashboard" %>
+  <% end %>
+
+
+<% end %>

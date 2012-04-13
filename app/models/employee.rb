@@ -7,6 +7,7 @@ class Employee < ActiveRecord::Base
   has_many :assignments
   has_many :stores, :through => :assignments
   has_many :shifts, :through => :assignments
+  has_one :user
   
   # Validations
   validates_presence_of :first_name, :last_name
@@ -25,10 +26,15 @@ class Employee < ActiveRecord::Base
   scope :managers, where('role = ?', 'manager')
   scope :admins, where('role = ?', 'admin')
   scope :alphabetical, order('last_name, first_name')
+  scope :search, lambda { |term| where('first_name LIKE ? OR last_name LIKE ?', "#{term}%", "#{term}%") }
   
   # Other methods
   def name
     "#{last_name}, #{first_name}"
+  end
+  
+  def role?
+    "#{role}"
   end
   
   def proper_name
@@ -49,6 +55,14 @@ class Employee < ActiveRecord::Base
   
   def age
     (Time.now.to_s(:number).to_i - date_of_birth.to_time.to_s(:number).to_i)/10e9.to_i
+  end
+  
+  def assignment_hours
+    num_hours = 0
+    self.assignments.each do |assignment|
+      num_hours += assignment.shift_hours
+    end
+    return num_hours
   end
   
   # Misc Constants

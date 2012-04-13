@@ -24,4 +24,8 @@
   </tbody>
 </table>
 
+<span class="smtext">
+  <%= will_paginate @jobs, :previous_label => "&larr;&nbsp;Previous&nbsp;", :next_label => "&nbsp;Next&nbsp;&rarr;" %>
+</span>
+
 <%= link_to 'New', new_job_path, :class => 'btn btn-primary' %>

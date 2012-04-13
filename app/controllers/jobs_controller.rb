@@ -1,7 +1,8 @@
 class JobsController < ApplicationController
 
-  #before_filter :check_login
-
+  before_filter :check_login
+  authorize_resource
+  
   def index
     # get all the data on current assignments in the system, 10 per page
     @jobs = Job.alphabetical.paginate(:page => params[:page]).per_page(10)

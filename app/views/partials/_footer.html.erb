@@ -1,17 +1,21 @@
+<div id="copyright", align="center">	
 <p>
-	<%= link_to 'Home', home_path('home') %>&nbsp;&nbsp;::&nbsp;&nbsp;
+	<%= link_to 'Home', home_path('index') %>&nbsp;&nbsp;::&nbsp;&nbsp;
 	<%= link_to 'About Us', home_path('about') %>&nbsp;&nbsp;::&nbsp;&nbsp;
 	<%= link_to 'Contact Us', home_path('contact') %>&nbsp;&nbsp;::&nbsp;&nbsp;
 	<%= link_to 'Privacy Policy', home_path('privacy') %>
 </p>
-<div id="copyright">
-	<br />Webmaster: <script type="text/javascript">
+
+	Webmaster: <script type="text/javascript">
 	<!--
 		// protected email script by Joe Maller. JavaScripts available at http://www.joemaller.com
 		// this script is free to use and distribute but please credit me and/or link to my site
 		emailE=('mbautist' + '@andrew.cmu.edu')
 		document.write('<a href="mailto:' + emailE + '">' + 'Miko Bautista' + '</a>')
 	//-->
-	</script>&nbsp;&nbsp;Copyright 2012 <a href="#">MB</a>
-	<br /><br />
+	</script>&nbsp;&nbsp;Copyright 2012
+	<br />
+	<%= link_to image_tag("Follow-us-Twitter-icon.jpg", :alt => "rss feed"), "https://twitter.com/#!/mycreamery" %>
+	<%= link_to image_tag("facebook.png", :alt => "rss feed"), "http://www.facebook.com/mycreamery" %>
+	<br />
 </div>

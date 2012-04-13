@@ -1,6 +1,7 @@
 class Store < ActiveRecord::Base
   # Callbacks
   before_save :reformat_phone
+  before_save :find_store_coordinates
   
   # Relationships
   has_many :assignments
@@ -28,14 +29,35 @@ class Store < ActiveRecord::Base
   # Misc Constants
   STATES_LIST = [['Ohio', 'OH'],['Pennsylvania', 'PA'],['West Virginia', 'WV']]
   
+  def employee_hours
+    num_hours = 0
+    self.employees.each do |employee|
+      num_hours += employee.assignment_hours
+    end
+    return num_hours
+  end
+  
+  def find_store_coordinates
+    coord = Geokit::Geocoders::GoogleGeocoder.geocode "#{name}, #{state}"
+    if coord.success
+      self.lat, self.lon = coord.ll.split(',')
+    else
+      errors.add_to_base("Error with geocoding")
+    end
+  end
+  
+  
   # Callback code
   # -----------------------------
-   private
-   # We need to strip non-digits before saving to db
-   def reformat_phone
-     phone = self.phone.to_s  # change to string in case input as all numbers 
-     phone.gsub!(/[^0-9]/,"") # strip all non-digits
-     self.phone = phone       # reset self.phone to new string
-   end
+  
+  private
+  # We need to strip non-digits before saving to db
+  def reformat_phone
+    phone = self.phone.to_s  # change to string in case input as all numbers
+    phone.gsub!(/[^0-9]/,"") # strip all non-digits
+    self.phone = phone       # reset self.phone to new string
+  end
+  
 
 end
+

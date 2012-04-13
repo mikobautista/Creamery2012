@@ -37,13 +37,15 @@ class ShiftTest < ActiveSupport::TestCase
       @cmu = FactoryGirl.create(:store)
       @ed = FactoryGirl.create(:employee)
       @cindy = FactoryGirl.create(:employee, :first_name => "Cindy", :last_name => "Crawford", :ssn => "084-35-9822", :date_of_birth => 17.years.ago.to_date)
-      @assign_ed = FactoryGirl.create(:assignment, :employee => @ed, :store => @cmu)
+      @assign_ed = FactoryGirl.create(:assignment, :employee => @ed, :store => @cmu, :end_date => nil)
       @assign_cindy = FactoryGirl.create(:assignment, :employee => @cindy, :store => @cmu, :end_date => nil)
       @shift_ed1 = FactoryGirl.create(:shift, :assignment => @assign_ed, :date => 2.weeks.ago.to_date, :start_time => Time.local(2000,1,1,10,0,0), :end_time => Time.local(2000,1,1,12,0,0))
       @shift_ed2 = FactoryGirl.create(:shift, :assignment => @assign_ed, :date => Date.today, :start_time => Time.local(2000,1,1,10,0,0), :end_time => Time.local(2000,1,1,12,0,0))
       @shift_cindy = FactoryGirl.create(:shift, :assignment => @assign_cindy, :date => 5.days.from_now.to_date, :start_time => Time.local(2000,1,1,10,0,0), :end_time => Time.local(2000,1,1,12,0,0))
+      @job_ed = FactoryGirl.create(:job, :name => "Ed's job name", :description => "Ed's job description", :active => true)
+      @shiftjob_ed = FactoryGirl.create(:shift_job, :shift => @shift_ed1, :job => @job_ed)
     end
-=begin  
+=begin
     # and provide a teardown method as well
      teardown do
       @cmu.destroy
@@ -62,9 +64,16 @@ class ShiftTest < ActiveSupport::TestCase
      end
      
      # test scope completed
-     
+     should "show that there is one completed shift" do
+      s = Shift.completed.map{|o| o}
+      assert_equal 1, s.size
+     end
+      
      # test scope incomplete
-     
+     should "show that there are two incomplete shifts" do
+      s = Shift.incomplete.map{|o| o}
+      assert_equal 2, s.size
+     end
      
      should "have a scope 'for_store' that works" do
        assert_equal 3, Shift.for_store(@cmu.id).size
@@ -74,7 +83,7 @@ class ShiftTest < ActiveSupport::TestCase
        assert_equal 2, Shift.for_employee(@ed.id).size
        assert_equal 1, Shift.for_employee(@cindy.id).size
      end
-          
+      
      should "have a scope 'for_assignment' that works" do
        assert_equal 2, Shift.for_assignment(@assign_ed.id).size
        assert_equal 1, Shift.for_assignment(@assign_cindy.id).size
@@ -93,11 +102,11 @@ class ShiftTest < ActiveSupport::TestCase
      end
      
      should "have a scope to find all shifts for the next x days" do
-       assert_equal 3, Shift.for_next_days(5).size
+       assert_equal 2, Shift.for_next_days(5).size
      end
      
      should "have a scope to find all shifts for the past x days" do
-       assert_equal 2, Shift.for_past_days(3).size
+       assert_equal 1, Shift.for_past_days(14).size
      end
      
      should "have all the shifts listed by store" do
@@ -109,10 +118,20 @@ class ShiftTest < ActiveSupport::TestCase
      end
      
     # test the method 'completed?'
-    #should "return whether or not shift is completed" do
-    #  assert_equal "Heimann, Alex", @alex.name
-    #end
-    
+     should "return whether or not shift is completed" do
+      assert_equal true, @shift_ed1.completed?
+      assert_equal false, @shift_ed2.completed?
+      assert_equal false, @shift_cindy.completed?
+     end
+     
+     should "allow for an end time in the past (or today) but after the start date" do
+       # Note that we've been testing :end_date => nil for a while now so safe to assume works...
+       @shift_ed3 = FactoryGirl.build(:shift, :assignment => @assign_ed, :date => 2.weeks.ago.to_date, :start_time => Time.local(2000,1,1,10,0,0), :end_time => Time.local(2000,1,1,12,0,0))
+       assert @shift_ed3.valid?
+     end
+     
   end
-  
 end
+
+
+

@@ -30,9 +30,20 @@ FactoryGirl.define do
   factory :shift do
     association :assignment
     date 1.month.ago.to_date
-    start_time 5.hours.ago
-    end_time 2.hours.ago
-    notes "Default Note"
+    start_time Time.local(2000,11,11,11,11,11)
+    end_time nil
+    notes "Default shift note"
   end
-  
+
+  factory :job do
+    name "Default job name"
+    description "Default job description"
+    active true
+  end
+
+  factory :shift_job do
+    association :job
+    association :shift
+  end
+
 end

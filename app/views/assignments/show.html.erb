@@ -25,6 +25,45 @@
   <%= @assignment.pay_level %>
 </p>
 
+<% if @assignment.shifts.empty? %>
+  <h3>No Shifts</h3>
+<% end %>
+
+<% if not @assignment.shifts.empty? %>
+  <br>
+  <br>
+  </p>
+    <h3>Current Shifts:</h3>
+  </p>
+  <br>
+  
+  <table class="table table-striped">
+    <thead>
+      <th>ID</th>
+      <th>Date</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+    </thead>
+    <tbody
+    </tr>
+  <% @assignment.shifts.each do|shift| %>
+    <tr>
+      <td><%= link_to shift.id, shift_path(shift) %></td>
+      <td><%= shift.date.strftime("%B %-d, %Y") %></td>
+      <td><%= shift.start_time.strftime("%l:%M%P") %></td>
+      <td><%= shift.end_time.nil? ? "Ongoing" : shift.end_time.strftime("%l:%M%P") %></td>
+      <td><%= link_to 'Edit', edit_shift_path(shift), :class => 'btn btn-mini'  %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>
+<br />
+
+<% if @assignment.end_date.nil? %>
+<p><%= link_to 'New Shift', new_shift_path(:assignment_id => @assignment.id), :class => 'btn btn-primary' %></p>
+<% end %>
+
 <div class="form-actions">
   <%= link_to 'Back', assignments_path, :class => 'btn'  %>
   <%= link_to 'Edit', edit_assignment_path(@assignment), :class => 'btn' %>

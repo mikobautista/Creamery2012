@@ -1,0 +1,100 @@
+<h3>Employee Information</h3>
+<br>
+<p>
+  <b>Name:</b>
+  <%= current_user.employee.proper_name %>
+<p>
+  <b>Phone:</b>
+  <%= current_user.employee.phone.insert(3,"-").insert(7,"-")%>
+</p>
+
+<p>
+  <b>Role: </b>
+  <%= current_user.employee.role.capitalize %>
+</p>
+
+<p>
+  <b>Date of Birth: </b>
+  <%= current_user.employee.date_of_birth.strftime("%B %-d, %Y") %>
+</p>
+
+<p>
+  <b>SSN: </b>
+  <%= current_user.employee.ssn %>
+</p>
+
+<p>
+  <b>Active: </b>
+  <%= current_user.employee.active ? 'Yes' : 'No' %>
+</p>
+
+<% if current_user.employee.current_assignment.shifts.for_past_days(14).empty? %>
+  <h3>No Past Shifts</h3>
+<% end %>
+
+<% if not current_user.employee.current_assignment.shifts.for_past_days(14).empty? %>
+  <br>
+  <br>
+  </p>
+    <h3>Past Shifts:</h3>
+  </p>
+  <table class="table table-striped">
+    <thead>
+      <th>Store</th>
+      <th>Date</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Actions</th>
+    </thead>
+    <tbody
+    </tr>
+  <% current_user.employee.current_assignment.shifts.for_past_days(14).each do|shift| %>
+    <tr>
+      <td><%= shift.assignment.store.name %></td>
+      <td><%= shift.date.strftime("%B %-d, %Y") %></td>
+      <td><%= shift.start_time.strftime("%l:%M%P") %></td>
+      <td><%= shift.end_time.strftime("%l:%M%P") %></td>
+      <td><%= link_to 'View', shift_path(shift), :class => 'btn btn-mini'  %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>
+
+<br>
+  
+<% if current_user.employee.current_assignment.shifts.for_next_days(14).empty? %>
+  <h3>No Upcoming Shifts</h3>
+<% end %>
+
+<% if not current_user.employee.current_assignment.shifts.for_next_days(14).empty? %>
+  <br>
+  <br>
+  </p>
+    <h3>Upcoming Shifts:</h3>
+  </p>
+  <br>
+  <table class="table table-striped">
+    <thead>
+      <th>Store</th>
+      <th>Date</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Actions</th>
+    </thead>
+    <tbody
+    </tr>
+  <% current_user.employee.current_assignment.shifts.upcoming.each do|shift| %>
+    <tr>
+      <td><%= shift.assignment.store.name %></td>
+      <td><%= shift.date.strftime("%B %-d, %Y") %></td>
+      <td><%= shift.start_time.strftime("%l:%M%P") %></td>
+      <td><%= shift.end_time.strftime("%l:%M%P") %></td>
+      <td><%= link_to 'View', shift_path(shift), :class => 'btn btn-mini'  %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>
+
+<br>

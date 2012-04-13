@@ -16,14 +16,19 @@
       <td><%= user.employee.role.capitalize %></td>
       <td>
           <%= link_to 'View', user_path(user), :class => 'btn btn-mini' %>
-          <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini' %>
-          <%= link_to 'Delete', user_path(user), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+            <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini' %>
+          <% if current_user != user %>
+            <%= link_to 'Delete', user_path(user), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+          <% end %>
       </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br />
+<span class="smtext">
+  <%= will_paginate @users, :previous_label => "&larr;&nbsp;Previous&nbsp;", :next_label => "&nbsp;Next&nbsp;&rarr;" %>
+</span>
 
-<%= link_to 'New User', new_user_path %>
+<%= link_to 'New', new_user_path, :class => 'btn btn-primary' %>
+

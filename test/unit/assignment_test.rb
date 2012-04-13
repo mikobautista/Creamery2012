@@ -4,7 +4,7 @@ class AssignmentTest < ActiveSupport::TestCase
   # Test relationships
    should belong_to(:employee)
    should belong_to(:store)
-
+    
    # Test basic validations
    # for pay level
    should allow_value(1).for(:pay_level)
@@ -18,6 +18,7 @@ class AssignmentTest < ActiveSupport::TestCase
    should_not allow_value(7).for(:pay_level)
    should_not allow_value(2.5).for(:pay_level)
    should_not allow_value(-2).for(:pay_level)
+   
    # for start date
    should allow_value(7.weeks.ago.to_date).for(:start_date)
    should allow_value(2.years.ago.to_date).for(:start_date)

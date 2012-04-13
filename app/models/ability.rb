@@ -3,22 +3,30 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
-    if user.role? :admin
+    if user.employee.role? == "admin"
       can :manage, :all
-    elsif user.role? :manager
+      
+    elsif user.employee.role? == "manager"
+      can :manage, Shift do |shift|
+        Shift.for_store(user.employee.store.id).include?(shift.id)
+      end
+      can :manage, Employee do |employee|
+        employee.current_assignment.store_id == user.employee.current_assignment.store_id
+      end
+      can :manage, User do |u|
+        u.employee.id == user.employee.id
+      end
+
+    elsif user.role == "employee"
+      can :read, Shift do |shift|
+        shift.id == user.employee.assignment.shift.id
+      end
       can :update, Shift do |shift|
-        shift.id == user.shift_id
-      end
-      can :delete, Shift do |shift|
-        shift.id == user.shift_id
-      end
-    elsif user.role? :member
-      can:update, Shift do |shift|
-        shift.id == user.shift_id
+        shift.id == user.employee.assignment.shift.id
       end
     else
       can :read, :all
     end
-
   end
+  
 end

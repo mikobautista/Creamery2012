@@ -32,39 +32,50 @@
 
 <p>
   <b>Active</b><br>
-  <%= @store.active %>
+  <%= @store.active? ? "Yes" : "No" %>
 </p>
 
-<br>
-<br>
+<p>
+  <b>Total Hours</b><br>
+  <%= @store.employee_hours %>
 </p>
-  <h3>Employee Listing:</h3>
-</p>
-<br>
-  
-<table class="table table-striped">
-  <thead>
-    <th>Name</th>
-    <th>Role</th>
-    <th>Phone</th>
-    <th>Active</th>
-    <th>Actions</th>
-  </thead>
-  <tbody
-  </tr>
-<% @store.assignments.by_employee.each do|assignment| %>
-  <tr>
-    <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
-    <td><%= assignment.employee.role.capitalize %></td>
-    <td><%= assignment.employee.phone.insert(3,"-").insert(7,"-") %></td>
-    <td><%= assignment.employee.active ? "Yes" : "No" %></td>
-    <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %></td>
-  </tr>
+<p>
+
+<% if @store.assignments.current.empty? %>
+  <h3>No Employees</h3>
 <% end %>
-</tbody>
-</table>
 
+<% if not @store.assignments.current.empty? %>
+  <br>
+  <br>
+  </p>
+    <h3>Employee Listing:</h3>
+  </p>
+  <br>
+    
+  <table class="table table-striped">
+    <thead>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </thead>
+    <tbody
+    </tr>
+  <% @store.assignments.current.by_employee.each do|assignment| %>
+    <tr>
+      <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
+      <td><%= assignment.employee.role.capitalize %></td>
+      <td><%= assignment.employee.phone.insert(3,"-").insert(7,"-") %></td>
+      <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>
 <br />
+
+<p><%= link_to 'New Assignment', new_assignment_path(:store_id => @store.id), :class => 'btn btn-primary' %></p>
 
 <div class="form-actions">
   <%= link_to 'Back', stores_path, :class => 'btn'  %>

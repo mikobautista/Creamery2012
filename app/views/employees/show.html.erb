@@ -2,7 +2,7 @@
 <br>
 <p>
   <b>Name:</b>
-  <%=h @employee.name %>
+  <%=h @employee.proper_name %>
 <p>
   <b>Phone:</b>
   <%= @employee.phone.insert(3,"-").insert(7,"-")%>
@@ -28,33 +28,47 @@
   <%= @employee.active ? 'Yes' : 'No' %>
 </p>
 
-<br>
-<br>
-</p>
-  <h3>Assignment History:</h3>
-</p>
-<br>
-  
-<table class="table table-striped">
-  <thead>
-    <th>Store Name</th>
-    <th>Start Date</th>
-    <th>End Date</th>
-    <th>Pay Level</th>
-    <th>Actions</th>
-  </thead>
-  <tbody
-  </tr>
-<% @employee.assignments.each do|assignment| %>
-  <tr>
-    <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
-    <td><%= assignment.start_date.strftime("%B %-d, %Y") %></td>
-    <td><%= assignment.end_date.nil? ? "Ongoing" : assignment.end_date.strftime("%B %-d, %Y") %></td>
-    <td><%= assignment.pay_level %></td>
-    <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %></td>
-  </tr>
+<% if @employee.assignments.empty? %>
+  <h3>No Assignments</h3>
 <% end %>
-</tbody>
-</table>
+
+<% if not @employee.assignments.empty? %>
+  <br>
+  <br>
+  </p>
+    <h3>Assignment History:</h3>
+  </p>
+  <br>
+  <table class="table table-striped">
+    <thead>
+      <th>ID</th>
+      <th>Store Name</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Pay Level</th>
+      <th>Actions</th>
+    </thead>
+    <tbody
+    </tr>
+  <% @employee.assignments.each do|assignment| %>
+    <tr>
+      <td><%= link_to assignment.id, assignment_path(assignment) %></td>
+      <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
+      <td><%= assignment.start_date.strftime("%B %-d, %Y") %></td>
+      <td><%= assignment.end_date.nil? ? "Ongoing" : assignment.end_date.strftime("%B %-d, %Y") %></td>
+      <td><%= assignment.pay_level %></td>
+      <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>
 <br />
-<p><%= link_to 'New Assignment', new_assignment_path, :class => 'btn btn-primary' %></p>
+
+<p><%= link_to 'New Assignment', new_assignment_path(:employee_id => @employee.id), :class => 'btn btn-primary' %></p>
+
+<div class="form-actions">
+  <%= link_to 'Back', employees_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_employee_path(@employee), :class => 'btn' %>
+  <%= link_to 'Delete', employee_path(@employee), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

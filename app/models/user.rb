@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   before_save :prepare_password
   
   # Relationships
-	belongs_to :employee
+  belongs_to :employee
 
   validates_uniqueness_of :email
   validates_format_of :email, :with => /^[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}$/i
@@ -14,26 +14,29 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 4, :allow_blank => true
   validate :valid_and_active_employee_id
+  
+  # Scopes
+  scope :alphabetical, joins(:employee).order('last_name, first_name')
 
-	def proper_name
-		Employee.find(self.employee_id).name 
-	end
+  def proper_name
+          Employee.find(self.employee_id).name 
+  end
 
-	def role
-		Employee.find(self.employee_id).role
-	end
+  def role
+          Employee.find(self.employee_id).role
+  end
 
-	# Validation Method
-	def valid_and_active_employee_id
-		employee_ids = Employee.active.all.map{|e| e.id}
-		unless employee_ids.include?(self.employee_id)
-			errors.add(:employee_id, "is not an active employee")
-			return false
-		end
-		return true
-	end
+  # Validation Method
+  def valid_and_active_employee_id
+    employee_ids = Employee.active.all.map{|e| e.id}
+    unless employee_ids.include?(self.employee_id)
+      errors.add(:employee_id, "is not an active employee")
+      return false
+    end
+    return true
+  end
 
-	def self.authenticate(login, pass)
+  def self.authenticate(login, pass)
     user = find_by_email(login)
     return user if user && user.password_hash == user.encrypt_password(pass)
   end

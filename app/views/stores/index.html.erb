@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @stores.alphabetical.each do |store| %>
+    <% @stores.each do |store| %>
       <tr>
         <td><%= store.id %></td>
         <td><%= store.name %></td>
@@ -23,5 +23,9 @@
     <% end %>
   </tbody>
 </table>
+
+<span class="smtext">
+  <%= will_paginate @stores, :previous_label => "&larr;&nbsp;Previous&nbsp;", :next_label => "&nbsp;Next&nbsp;&rarr;" %>
+</span>
 
 <%= link_to 'New', new_store_path, :class => 'btn btn-primary' %>

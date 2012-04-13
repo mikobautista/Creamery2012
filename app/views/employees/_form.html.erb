@@ -5,7 +5,7 @@
       <%= f.input :first_name, :label => "First Name" %>
       <%= f.input :last_name, :label => "Last Name" %>
       <%= f.input :ssn, :label => "SSN" %>
-      <%= f.input :date_of_birth, :label => "Date of Birth", :as => :date, :order => [:month, :day, :year], :start_year => Date.today.year - 50, :end_year => Date.today.year - 20 %>
+      <%= f.input :date_of_birth, :label => "Date of Birth", :as => :date, :order => [:month, :day, :year], :start_year => Date.today.year - 50, :end_year => Date.today.year - 14 %>
       <%= f.input :phone %>
       <%= f.input :role, :collection => Employee::ROLES_LIST %>
       <%= f.input :active %>

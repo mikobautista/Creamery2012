@@ -1,8 +1,8 @@
-<p id="notice"><%= notice %></p>
-
+<h1>User</h1>
+<br>
 <p>
   <b>Employee:</b>
-  <%= @user.employee_id %>
+  <%= @user.employee.name %>
 </p>
 
 <p>
@@ -12,9 +12,11 @@
 
 <p>
   <b>Role:</b>
-  <%= @user.employee.role %>
+  <%= @user.employee.role.capitalize %>
 </p>
 
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="form-actions">
+  <%= link_to 'Back', stores_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_store_path(@store), :class => 'btn' %>
+  <%= link_to 'Delete', store_path(@store), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

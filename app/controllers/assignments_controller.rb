@@ -1,10 +1,11 @@
 class AssignmentsController < ApplicationController
 
-  #before_filter :check_login
+  before_filter :check_login
+  authorize_resource
 
   def index
     # get all the data on current assignments in the system, 10 per page
-    @assignments = Assignment.current.chronological.paginate(:page => params[:page]).per_page(10)
+    @assignments = Assignment.by_employee.by_store.paginate(:page => params[:page]).per_page(10)
   end
 
   def show
@@ -13,7 +14,17 @@ class AssignmentsController < ApplicationController
   end
 
   def new
-    @assignment = Assignment.new
+    if params[:store_id]
+      @assignment = Assignment.new(:store_id => params[:store_id])
+    elsif params[:employee_id]
+      @assignment = Assignment.new(:employee_id => params[:employee_id])
+    else
+      @assignment = Assignment.new
+    end
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @assignment }
+    end
   end
 
   def edit

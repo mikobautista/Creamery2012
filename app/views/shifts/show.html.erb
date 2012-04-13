@@ -2,7 +2,7 @@
 
 <p>
   <b>Assignment</b><br>
-  <%= @shift.assignment.employee.last_name + " @ " + @shift.assignment.store.name %>
+  <%= @shift.assignment.name %>
 </p>
 
 <p>
@@ -17,9 +17,13 @@
 
 <p>
   <b>End time</b><br>
-  <%= @shift.end_time.strftime("%l:%M%P") %>
+  <%= @shift.end_time.nil? ? "Ongoing" : @shift.end_time.strftime("%l:%M%P") %>
 </p>
-
+<p>
+  <b>Total Hours</b><br>
+  <%= @shift.time_worked_in_hours %>
+</p>
+<p>
 <p>
   <b>Notes</b><br>
   <%= (@shift.notes == "") ? "None" : @shift.notes %>

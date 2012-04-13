@@ -1,15 +1,17 @@
 class StoresController < ApplicationController
 
-  #before_filter :check_login
+  before_filter :check_login
+  authorize_resource
 
   def index
     # get all the data on stores in the system, 10 per page
-    @stores = Store.active.alphabetical.paginate(:page => params[:page]).per_page(10)
+    @stores = Store.alphabetical.paginate(:page => params[:page]).per_page(10)
   end
 
   def show
      # get data on that particular store
       @store = Store.find(params[:id])
+      @store = Store.allow
   end
 
   def new
@@ -41,6 +43,7 @@ class StoresController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @employee
     @store = Store.find(params[:id])
     @store.destroy
     flash[:notice] = "Successfully destroyed store."

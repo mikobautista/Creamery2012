@@ -1,0 +1,47 @@
+    <h3>Active Stores</h3> 
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>No. of Current Employees</th>
+        <th>Employee Hours</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stores.each do |store| %>
+        <tr>
+          <td><%= store.id %> </td>
+          <td><%= link_to store.name, store_path(store) %></td>
+          <td><%= store.assignments.current.count %></td>
+          <td><%= store.employee_hours %> </td>
+          <td>
+            <%= link_to 'Assign Employee', new_assignment_path(:store_id => store.id), :class => 'btn btn-mini' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+      
+    <h3>Employees of the Week</h3>
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Store</th>
+        <th>No. of Hours Worked</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @top_employees.each do |employee| %>
+        <tr>
+          <td><%= employee.id %> </td>
+          <td><%= link_to employee.name, employee_path(employee) %></td>
+          <td><%= link_to employee.current_assignment.store.name, store_path(employee.current_assignment.store) %></td>
+          <td><%= employee.assignment_hours %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

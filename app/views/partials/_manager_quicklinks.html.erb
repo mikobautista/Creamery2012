@@ -1,0 +1,13 @@
+<div class="well">
+	<h2>Quick Links</h2>
+	<ul>Search for an employee:
+		
+			<%= form_tag(search_path) do %>
+				<%= text_field_tag('query', '', :size => 12) %>
+				<%= submit_tag('Find') %>
+			<% end %>
+		
+		<li><%= link_to (raw("<i class=\"icon-user\"></i> View Employees")), employees_path %></li>
+		<li><%= link_to (raw("<i class=\"icon-time\"></i> View Shifts")), shifts_path %></li>
+	</ul>
+</div>

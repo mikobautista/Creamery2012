@@ -1,10 +1,11 @@
 class EmployeesController < ApplicationController
 
-  #before_filter :check_login
-
+  before_filter :check_login
+  authorize_resource
+  
   def index
     # get all the data on employees in the system, 10 per page
-    @employees = Employee.active.alphabetical.paginate(:page => params[:page]).per_page(10)
+    @employees = Employee.alphabetical.paginate(:page => params[:page]).per_page(10)
   end
 
   def show

@@ -14,10 +14,10 @@
     <% @shifts.each do |shift| %>
       <tr>
         <td><%= shift.id %></td>
-        <td><%= link_to shift.assignment.employee.last_name + " @ " + shift.assignment.store.name, assignment_path(shift.assignment_id) %></td>
+        <td><%= link_to shift.assignment.name, assignment_path(shift.assignment_id) %></td>
         <td><%= shift.date.strftime("%B %-d, %Y") %></td>
         <td><%= shift.start_time.strftime("%l:%M%P") %></td>
-        <td><%= shift.end_time.strftime("%l:%M%P") %></td>
+        <td><%= shift.end_time.nil? ? "Ongoing" : shift.end_time.strftime("%l:%M%P") %></td>
         <td>
           <%= link_to 'View', shift_path(shift), :class => 'btn btn-mini' %>
           <%= link_to 'Edit', edit_shift_path(shift), :class => 'btn btn-mini' %>
@@ -27,5 +27,9 @@
     <% end %>
   </tbody>
 </table>
+
+<span class="smtext">
+  <%= will_paginate @shifts, :previous_label => "&larr;&nbsp;Previous&nbsp;", :next_label => "&nbsp;Next&nbsp;&rarr;" %>
+</span>
 
 <%= link_to 'New', new_shift_path, :class => 'btn btn-primary' %>

@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
 
-  #before_filter :check_login, :except => [:new, :create]
-
+  before_filter :check_login
+  authorize_resource
+  
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.alphabetical.paginate(:page => params[:page]).per_page(10)
 
     respond_to do |format|
       format.html # index.html.erb

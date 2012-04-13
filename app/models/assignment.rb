@@ -5,6 +5,7 @@ class Assignment < ActiveRecord::Base
   # Relationships
   belongs_to :employee
   belongs_to :store
+  has_many :shifts
   
   # Validations
   validates_numericality_of :pay_level, :only_integer => true, :greater_than => 0, :less_than => 7
@@ -24,6 +25,18 @@ class Assignment < ActiveRecord::Base
   scope :for_pay_level, lambda {|pay_level| where("pay_level = ?", pay_level) }
   scope :for_role, lambda {|role| joins(:employee).where("role = ?", role) }
 
+  def name
+    "#{self.employee.name} @ #{self.store.name}"
+  end
+  
+  def shift_hours
+    num_hours = 0
+    self.shifts.for_past_days(14).each do |shift|
+      num_hours += shift.time_worked_in_hours
+    end
+    return num_hours
+  end
+  
   # Private methods for callbacks and custom validations
   private  
   
@@ -50,4 +63,5 @@ class Assignment < ActiveRecord::Base
       errors.add(:store_id, "is not an active store at the creamery")
     end
   end
+  
 end

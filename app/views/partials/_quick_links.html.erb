@@ -1,11 +1,11 @@
-<div class="well">
-	<h2>Quick Links</h2>
-	<ul>Switch to:
-		<li><%= link_to 'Employees', employees_path %></li>
-		<li><%= link_to 'Stores', stores_path %></li>
-		<li><%= link_to 'Assignments', assignments_path %></li>
-		<li><%= link_to 'Shifts', shifts_path %></li>
-		<li><%= link_to 'Jobs', jobs_path %></li>
-		<li><%= link_to 'Users', users_path %></li>
-	</ul>
-</div>
+<% if logged_in? %>
+	
+	<% if current_user.employee.role? == "admin" %>
+		<%= render :partial => "partials/admin_quicklinks" %>
+	<% end %>
+	
+	<% if current_user.employee.role? == "manager" %>
+		<%= render :partial => "partials/manager_quicklinks" %>
+	<% end %>
+
+<% end %>

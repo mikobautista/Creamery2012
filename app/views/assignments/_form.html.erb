@@ -6,8 +6,11 @@
       <%= f.input :employee_id, :label => "Employee", :collection => Employee.alphabetical.all %>
       <%= f.input :pay_level, :label => "Pay Level", :collection => [1, 2, 3, 4, 5, 6] %>
       <%= f.input :start_date, :label => "Start Date", :as => :date, :order => [:month, :day, :year], :start_year => Date.today.year - 20, :end_year => Date.today.year %>
-      <%= f.input :end_date, :label => "End Date", :as => :date, :order => [:month, :day, :year], :start_year => Date.today.year - 20, :end_year => Date.today.year %>
-    
+      
+      <% if controller.action_name != "new" %>
+	<%= f.input :end_date, :label => "End Date", :as => :date, :order => [:month, :day, :year], :include_blank => true, :default => {:day => nil, :month => nil, :year => nil} %>
+      <% end %>
+      
     <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to 'Cancel', assignments_path, :class => 'btn' %>
