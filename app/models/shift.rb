@@ -27,8 +27,9 @@ class Shift < ActiveRecord::Base
   validates_time :end_time, :on => :create, :allow_nil => true, :allow_blank => true
   #validates_time :end_time, :on => :update, :before => Time.now, :after => :start_time, :before_message => "cannot be in the future", :after_message => "cannot be before/during start time"
   # make sure the assignment selected is one that is active
+  validate :end_time_is_not_in_future, :on => :update
   validate :assignment_is_current
-
+  
   # Scopes
   # -----------------------------
   
@@ -86,10 +87,11 @@ class Shift < ActiveRecord::Base
   end
   
   def end_time_is_not_in_future
+    return true if self.end_time.nil?
     if self.date < Date.today
       return true
     elsif self.date == Date.today
-      return self.start_time < self.end_time_is_not_in_future
+      return Time.now.hour * 60 + Time.now.min > self.end_time.hour * 60 + self.end_time.min
     else
       return false
     end
