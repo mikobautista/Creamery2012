@@ -2,10 +2,12 @@ require 'test_helper'
 
 class AssignmentTest < ActiveSupport::TestCase
   # Test relationships
+  # -----------------------------
    should belong_to(:employee)
    should belong_to(:store)
     
    # Test basic validations
+   # -----------------------------
    # for pay level
    should allow_value(1).for(:pay_level)
    should allow_value(2).for(:pay_level)
@@ -27,6 +29,7 @@ class AssignmentTest < ActiveSupport::TestCase
    should_not allow_value(nil).for(:start_date)
    
    # Need to do the rest with a context
+   # -----------------------------
    context "Creating six employees and three stores with five assignments" do
      # create the objects I want with factories
      setup do 
@@ -64,6 +67,7 @@ class AssignmentTest < ActiveSupport::TestCase
        @assign_kathryn.destroy
      end
    
+     # now run the tests
      should "have a scope 'for_store' that works" do
        assert_equal 4, Assignment.for_store(@cmu.id).size
        assert_equal 1, Assignment.for_store(@oakland.id).size

@@ -11,6 +11,8 @@ class ShiftJob < ActiveRecord::Base
   validate :shift_end_time_passed
   validate :job_is_active_in_system
 
+  # Scopes
+  # -----------------------------
   scope :by_job, joins(:job).order('name')
   
   # Callback Methods
@@ -31,6 +33,7 @@ class ShiftJob < ActiveRecord::Base
     end
   end
   
+  # returns whether or not the job the shiftjob is assigned to is active
   def job_is_active_in_system
     all_active_jobs = Job.active.all.map{|j| j.id}
     unless all_active_jobs.include?(self.job_id)

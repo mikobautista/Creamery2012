@@ -2,6 +2,7 @@ class HomeController < ApplicationController
 
   def index
     @stores = Store.active.alphabetical
+    # obtain variables for the dashboards, depending on role of user
     if logged_in?
       if current_user.employee.role? == "admin"
         @top_employees = Employee.active.sort{|x,y| x.assignment_hours <=> y.assignment_hours}.last(5).reverse
@@ -18,6 +19,7 @@ class HomeController < ApplicationController
   end
 
   def search
+    # query used for the search bar in quick links
     @query = params[:query]
     if logged_in?
       if current_user.employee.role? == "admin"

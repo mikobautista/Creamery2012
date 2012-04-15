@@ -4,7 +4,7 @@ class ShiftsController < ApplicationController
   authorize_resource
   
  def index
-    # get all the data on current shifts in the system, 10 per page
+    # get all the data on shifts in the system, 10 per page
     @shifts = Shift.chronological.paginate(:page => params[:page]).per_page(10)
   end
 

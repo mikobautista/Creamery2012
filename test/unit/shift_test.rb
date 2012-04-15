@@ -3,6 +3,7 @@ require 'test_helper'
 class ShiftTest < ActiveSupport::TestCase
 
   # Test relationships
+  # -----------------------------
    should belong_to(:assignment)
    should have_many(:shift_jobs)
    should have_many(:jobs).through(:shift_jobs)
@@ -10,7 +11,7 @@ class ShiftTest < ActiveSupport::TestCase
    should have_one(:employee).through(:assignment)
 
   # Test basic validations
-
+  # -----------------------------
   # for date
    should allow_value(7.weeks.ago.to_date).for(:date)
    should allow_value(2.years.ago.to_date).for(:date)
@@ -22,6 +23,8 @@ class ShiftTest < ActiveSupport::TestCase
    should allow_value(3.hours.ago).for(:start_time)
    should_not allow_value(nil).for(:start_time)
 
+  # Need to do the rest with a context
+  # -----------------------------
   context "Creating three shifts" do
     # create the objects I want with factories
     setup do 
@@ -36,7 +39,7 @@ class ShiftTest < ActiveSupport::TestCase
       @job_ed = FactoryGirl.create(:job, :name => "Ed's job name", :description => "Ed's job description", :active => true)
       @shiftjob_ed = FactoryGirl.create(:shift_job, :shift => @shift_ed1, :job => @job_ed)
     end
-=begin
+
     # and provide a teardown method as well
      teardown do
       @cmu.destroy
@@ -44,13 +47,14 @@ class ShiftTest < ActiveSupport::TestCase
       @cindy.destroy
       @assign_ed.destroy
       @assign_cindy.destroy
-      @shift_ed.destroy
+      @shift_ed1.destroy
+      @shift_ed2.destroy
       @shift_cindy.destroy
+      @job_ed.destroy
+      @shiftjob_ed.destroy
      end
-=end
-
-  
-    # now run the tests:
+     
+     # now run the tests:
      should "have all the shifts listed chronologically by date" do
        assert_equal [@shift_ed1, @shift_ed2, @shift_cindy], Shift.chronological.map{|s| s}
      end
@@ -109,11 +113,15 @@ class ShiftTest < ActiveSupport::TestCase
        assert_equal [@shift_cindy, @shift_ed1, @shift_ed2], Shift.by_employee.map{|s| s}
      end
      
-    # test the method 'completed?'
      should "return whether or not shift is completed" do
       assert_equal true, @shift_ed1.completed?
       assert_equal false, @shift_ed2.completed?
       assert_equal false, @shift_cindy.completed?
+     end
+     
+     should "return number of hours shift lasted" do
+      assert_equal 2, @shift_ed1.time_worked_in_hours
+      assert_equal 2, @shift_cindy.time_worked_in_hours
      end
      
      should "allow for an end time in the past (or today) but after the start date" do
@@ -121,9 +129,7 @@ class ShiftTest < ActiveSupport::TestCase
        @shift_ed3 = FactoryGirl.build(:shift, :assignment => @assign_ed, :date => 2.weeks.ago.to_date, :start_time => Time.local(2000,1,1,10,0,0), :end_time => Time.local(2000,1,1,12,0,0))
        assert @shift_ed3.valid?
      end
+     
   end
 
 end
-
-
-

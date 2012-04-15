@@ -1,7 +1,7 @@
 class Store < ActiveRecord::Base
   # Callbacks
   before_save :reformat_phone
-  #before_save :find_store_coordinates
+  before_save :find_store_coordinates #comment this out to run unit tests
   
   # Relationships
   has_many :assignments
@@ -24,7 +24,6 @@ class Store < ActiveRecord::Base
   scope :alphabetical, order('name')
   scope :active, where('active = ?', true)
   scope :inactive, where('active = ?', false)
-  
   
   # Misc Constants
   STATES_LIST = [['Ohio', 'OH'],['Pennsylvania', 'PA'],['West Virginia', 'WV']]
@@ -53,7 +52,6 @@ class Store < ActiveRecord::Base
   
   # Callback code
   # -----------------------------
-  
   private
   # We need to strip non-digits before saving to db
   def reformat_phone

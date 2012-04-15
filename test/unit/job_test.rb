@@ -1,15 +1,17 @@
 require 'test_helper'
 
 class JobTest < ActiveSupport::TestCase
-  # Relationship macros...
+  # Test relationships
+  # -----------------------------
   should have_many(:shift_jobs)
   should have_many(:shifts).through(:shift_jobs)
   
-  # Validation macros...
+  # Test basic validations
+  # -----------------------------
   should validate_presence_of(:name)
   
+  # Need to do the rest with a context
   # ---------------------------------
-  # Testing other methods with a context
   context "Creating four jobs" do
     # create the objects I want with factories
     setup do
@@ -18,7 +20,7 @@ class JobTest < ActiveSupport::TestCase
       @inactive1 = Factory.create(:job, :name => "Inactive1", :active => false)
       @inactive2 = Factory.create(:job, :name => "Inactive2", :active => false)
     end
-=begin    
+
     # and provide a teardown method as well
     teardown do
       @active1.destroy
@@ -26,7 +28,7 @@ class JobTest < ActiveSupport::TestCase
       @inactive1.destroy
       @inactive2.destroy
     end
-=end
+
     # test the scope 'active'
     should "shows that there are two active jobs" do
       assert_equal ["Active1", "Active2"], Job.active.map{|o| o.name}

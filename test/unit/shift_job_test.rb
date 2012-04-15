@@ -2,12 +2,13 @@ require 'test_helper'
 
 class ShiftJobTest < ActiveSupport::TestCase
 
-  # Relationship macros...
+  # Test relationships
+  # -----------------------------
   should belong_to(:shift)
   should belong_to(:job)
   
-  ## ---------------------------------
-  # Testing other methods with a context
+  # Need to do the rest with a context
+  # -----------------------------
   context "Creating two shiftjobs" do
     # create the objects I want with factories
     setup do 
@@ -22,7 +23,6 @@ class ShiftJobTest < ActiveSupport::TestCase
       @job_cindy = FactoryGirl.create(:job, :name => "Cindy's job", :active => false)
     end
     
-=begin
     # and provide a teardown method as well
     teardown do
       @ed.destroy
@@ -32,10 +32,9 @@ class ShiftJobTest < ActiveSupport::TestCase
       @assign_cindy.destroy
       @shift_ed.destroy
       @shift_cindy.destroy
-      @job_ed
-      @job_cindy
+      @job_ed.destroy
+      @job_cindy.destroy
     end
-=end
 
     should "show that all factories are properly created" do
       assert_equal "CMU", @cmu.name
@@ -49,12 +48,14 @@ class ShiftJobTest < ActiveSupport::TestCase
       assert @job_cindy.active == false
     end
     
+    # test that job is active
     should "make sure job is active in system" do
       shiftjob_cindy = FactoryGirl.build(:shift_job, :shift => @shift_cindy, :job => @job_cindy)
       deny shiftjob_cindy.valid?
       shiftjob_cindy.destroy
     end
     
+    # test that job is added to shifts that are not over
     should "allow jobs to be added to shift when shift is over" do
       shiftjob_ed = FactoryGirl.build(:shift_job, :shift => @shift_ed, :job => @job_ed)
       assert shiftjob_ed.valid?

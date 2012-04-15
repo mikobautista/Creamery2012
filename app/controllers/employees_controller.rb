@@ -4,6 +4,7 @@ class EmployeesController < ApplicationController
   authorize_resource
   
   def index
+    # get all the data on employees in the system, 10 per page
     if current_user.employee.role? == 'admin'
       @employees = Employee.alphabetical.paginate(:page => params[:page]).per_page(10)
     elsif current_user.employee.role? == 'manager'

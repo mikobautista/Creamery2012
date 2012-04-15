@@ -1,4 +1,6 @@
 Creamery2012::Application.routes.draw do
+  get "password_resets/new"
+
  # Routes for main resources
   resources :employees
   resources :assignments
@@ -7,6 +9,7 @@ Creamery2012::Application.routes.draw do
   resources :jobs
   resources :users
   resources :sessions
+  resources :password_resets
   
   # Authentication routes
   match 'user/edit' => 'users#edit', :as => :edit_current_user

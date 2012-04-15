@@ -21,7 +21,9 @@
         <td>
           <%= link_to 'View', employee_path(employee), :class => 'btn btn-mini' %>
           <%= link_to 'Edit', edit_employee_path(employee), :class => 'btn btn-mini' %>
-          <%= link_to 'Delete', employee_path(employee), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+          <% if current_user.employee.id != employee.id %>
+            <%= link_to 'Delete', employee_path(employee), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

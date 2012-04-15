@@ -3,10 +3,12 @@ require 'test_helper'
 class StoreTest < ActiveSupport::TestCase
 
   # Test relationships
+  # -----------------------------
   should have_many(:assignments)
   should have_many(:employees).through(:assignments)
   
   # Test basic validations
+  # -----------------------------
   should validate_presence_of(:name)
   should validate_presence_of(:street)
   should validate_presence_of(:city)
@@ -36,9 +38,8 @@ class StoreTest < ActiveSupport::TestCase
   should_not allow_value("412/268/3259").for(:phone)
   should_not allow_value("412-2683-259").for(:phone)
   
-  
-  # Establish context
-  # Testing other methods with a context
+  # Need to do the rest with a context
+  # -----------------------------
   context "Creating three stores" do
     # create the objects I want with factories
     setup do 
@@ -53,8 +54,7 @@ class StoreTest < ActiveSupport::TestCase
       @hazelwood.destroy
       @oakland.destroy
     end
-  
-    # now run the tests:
+
     # test one of each factory (not really required, but not a bad idea)
     should "show that all factories are properly created" do
       assert_equal "CMU", @cmu.name

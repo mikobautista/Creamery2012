@@ -23,16 +23,16 @@ class Shift < ActiveRecord::Base
   # ensure start time is before end time and not nil
   validates_time :start_time, :allow_nil => false
   
-  # ensure end time is nil after creation, and after start time after updating
+  # ensure end time is nil after creation, and after start time but before current time after updating
   validates_time :end_time, :on => :create, :allow_nil => true, :allow_blank => true
-  #validates_time :end_time, :on => :update, :before => Time.now, :after => :start_time, :before_message => "cannot be in the future", :after_message => "cannot be before/during start time"
-  # make sure the assignment selected is one that is active
+  validates_time :end_time, :on => :update, :after => :start_time, :after_message => "cannot be before/during start time"
   validate :end_time_is_not_in_future, :on => :update
+  
+  # make sure the assignment selected is one that is active
   validate :assignment_is_current
   
   # Scopes
   # -----------------------------
-  
   # returns all shifts in the system that have at least one job associated with them
   scope :completed, where(:id => ShiftJob.select('shift_id'))
   
@@ -71,6 +71,7 @@ class Shift < ActiveRecord::Base
 
   # Methods
   # -----------------------------
+  # returns all shifts which have been assigned to jobs via shiftjobs
   def completed?
     # get an array of all shifts in the shiftjob table
     possible_shift_ids = ShiftJob.all.map{|s| s.id}
@@ -81,11 +82,13 @@ class Shift < ActiveRecord::Base
     return false
   end
   
+  # returns the number of hours that the shift lasted
   def time_worked_in_hours
     return 0 if self.end_time.nil?
     return ((self.end_time.hour * 60 + self.end_time.min) - (self.start_time.hour * 60 + self.start_time.min)) / 60
   end
   
+  # return whether or not the end time of the shift is in the future on update
   def end_time_is_not_in_future
     return true if self.end_time.nil?
     if self.date < Date.today
@@ -100,6 +103,7 @@ class Shift < ActiveRecord::Base
   # Private methods used to execute the custom validations
   # -----------------------------
   private
+  # returns whether or not the assignment the shift is being assigned to is current
   def assignment_is_current
     # get an array of all employee ids
     possible_assignment_ids = Assignment.current.all.map{|a| a.id}
@@ -111,6 +115,7 @@ class Shift < ActiveRecord::Base
     return true
   end
 
+  # automatically sets the end time of the shift 3 hours after the start time on update
   def set_end_time
     self.end_time = self.start_time + 3.hours if self.end_time.blank?
   end

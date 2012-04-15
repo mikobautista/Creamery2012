@@ -4,7 +4,7 @@ class AssignmentsController < ApplicationController
   authorize_resource
 
   def index
-    # get all the data on current assignments in the system, 10 per page
+    # get all the data on assignments in the system, 10 per page
     @assignments = Assignment.by_employee.by_store.paginate(:page => params[:page]).per_page(10)
   end
 

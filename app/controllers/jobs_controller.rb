@@ -4,12 +4,12 @@ class JobsController < ApplicationController
   authorize_resource
   
   def index
-    # get all the data on current assignments in the system, 10 per page
+    # get all the data on jobs in the system, 10 per page
     @jobs = Job.alphabetical.paginate(:page => params[:page]).per_page(10)
   end
 
   def show
-     # get data on that particular assignment
+     # get data on that particular job
       @job = Job.find(params[:id])
   end
 

@@ -3,12 +3,15 @@ require 'test_helper'
 class EmployeeTest < ActiveSupport::TestCase
  
   # Test relationships
+  # -----------------------------
   should have_many(:assignments)
   should have_many(:stores).through(:assignments)
   
   # Test basic validations
+  # -----------------------------
   should validate_presence_of(:first_name)
   should validate_presence_of(:last_name)
+  
   # tests for phone
   should allow_value("4122683259").for(:phone)
   should allow_value("412-268-3259").for(:phone)
@@ -21,12 +24,14 @@ class EmployeeTest < ActiveSupport::TestCase
   should_not allow_value("800-EAT-FOOD").for(:phone)
   should_not allow_value("412/268/3259").for(:phone)
   should_not allow_value("412-2683-259").for(:phone)
+  
   # tests for ssn
   should allow_value("123456789").for(:ssn)
   should_not allow_value("12345678").for(:ssn)
   should_not allow_value("1234567890").for(:ssn)
   should_not allow_value("bad").for(:ssn)
   should_not allow_value(nil).for(:ssn)
+  
   # test date_of_birth
   should allow_value(17.years.ago.to_date).for(:date_of_birth)
   should allow_value(15.years.ago.to_date).for(:date_of_birth)
@@ -34,6 +39,7 @@ class EmployeeTest < ActiveSupport::TestCase
   should_not allow_value(13.years.ago).for(:date_of_birth)
   should_not allow_value("bad").for(:date_of_birth)
   should_not allow_value(nil).for(:date_of_birth)
+  
   # tests for role
   should allow_value("admin").for(:role)
   should allow_value("manager").for(:role)
@@ -44,7 +50,8 @@ class EmployeeTest < ActiveSupport::TestCase
   should_not allow_value("vp").for(:role)
   should_not allow_value(nil).for(:role)
   
-  
+  # Need to do the rest with a context
+  # -----------------------------
   context "Creating six employees of three levels" do
     # create the objects I want with factories
     setup do 
