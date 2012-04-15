@@ -1,3 +1,4 @@
+<% if not current_user.employee.current_assignment.nil? %>
 <div class="well">
 	<h2>Quick Links</h2>
 	<ul>Search for an employee:
@@ -11,3 +12,4 @@
 		<li><%= link_to (raw("<i class=\"icon-time\"></i> View Shifts")), shifts_path %></li>
 	</ul>
 </div>
+<% end %>

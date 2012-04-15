@@ -13,12 +13,8 @@ class Ability
       can :manage, Employee do |employee|
         employee.current_assignment.store_id == user.employee.current_assignment.store_id
       end
-      can :manage, User do |u|
-        u.employee.id == user.employee.id
-      end
-
+      
     elsif user.role == "employee"
-      can :manage, :all
       can :read, Shift do |shift|
         shift.id == user.employee.assignment.shift.id
       end

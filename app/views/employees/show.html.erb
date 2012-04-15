@@ -23,50 +23,52 @@
   <%= @employee.ssn %>
 </p>
 
-<p>
-  <b>Active: </b>
-  <%= @employee.active ? 'Yes' : 'No' %>
-</p>
-
-<% if @employee.assignments.empty? %>
-  <h3>No Assignments</h3>
-<% end %>
-
-<% if not @employee.assignments.empty? %>
-  <br>
-  <br>
-  </p>
-    <h3>Assignment History:</h3>
-  </p>
-  <br>
-  <table class="table table-striped">
-    <thead>
-      <th>Store Name</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>Pay Level</th>
-      <th>Actions</th>
-    </thead>
-    <tbody
-    </tr>
-  <% @employee.assignments.each do|assignment| %>
-    <tr>
-      <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
-      <td><%= assignment.start_date.strftime("%B %-d, %Y") %></td>
-      <td><%= assignment.end_date.nil? ? "Ongoing" : assignment.end_date.strftime("%B %-d, %Y") %></td>
-      <td><%= assignment.pay_level %></td>
-      <td>
-        <%= link_to 'View', assignment_path(assignment), :class => 'btn btn-mini'  %>
-        <%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %>
-      </td>
-    </tr>
+<% if current_user.employee.role == "admin" %>
+    <p>
+      <b>Active: </b>
+      <%= @employee.active ? 'Yes' : 'No' %>
+    </p>
+  
+  <% if @employee.assignments.empty? %>
+    <h3>No Assignments</h3>
   <% end %>
-  </tbody>
-  </table>
+  
+  <% if not @employee.assignments.empty? %>
+    <br>
+    <br>
+    </p>
+      <h3>Assignment History:</h3>
+    </p>
+    <br>
+    <table class="table table-striped">
+      <thead>
+        <th>Store Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Pay Level</th>
+        <th>Actions</th>
+      </thead>
+      <tbody
+      </tr>
+    <% @employee.assignments.each do|assignment| %>
+      <tr>
+        <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
+        <td><%= assignment.start_date.strftime("%B %-d, %Y") %></td>
+        <td><%= assignment.end_date.nil? ? "Ongoing" : assignment.end_date.strftime("%B %-d, %Y") %></td>
+        <td><%= assignment.pay_level %></td>
+        <td>
+          <%= link_to 'View', assignment_path(assignment), :class => 'btn btn-mini'  %>
+          <%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn btn-mini'  %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+    </table>
+  <% end %>
+  <br />
+  
+    <p><%= link_to 'New Assignment', new_assignment_path(:employee_id => @employee.id), :class => 'btn btn-primary' %></p>
 <% end %>
-<br />
-
-<p><%= link_to 'New Assignment', new_assignment_path(:employee_id => @employee.id), :class => 'btn btn-primary' %></p>
 
 <div class="form-actions">
   <%= link_to 'Back', employees_path, :class => 'btn'  %>

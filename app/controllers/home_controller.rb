@@ -6,7 +6,7 @@ class HomeController < ApplicationController
       if current_user.employee.role? == "admin"
         @top_employees = Employee.active.sort{|x,y| x.assignment_hours <=> y.assignment_hours}.last(5).reverse
       end
-      if current_user.employee.role? == "manager"
+      if current_user.employee.role? == "manager" && !current_user.employee.current_assignment.nil?
         @employees = Employee.for_store(current_user.employee.current_assignment.store.id).where('end_date IS NULL').active.alphabetical.paginate(:page => params[:page]).per_page(10)
         @shifts = Shift.chronological
       end
@@ -19,8 +19,14 @@ class HomeController < ApplicationController
 
   def search
     @query = params[:query]
-    @employees = Employee.search(@query)
-    @total_hits = @employees.size
+    if logged_in?
+      if current_user.employee.role? == "admin"
+        @employees = Employee.search(@query)
+      elsif current_user.employee.role? == "manager"
+        @employees = Employee.for_store(current_user.employee.current_assignment.store_id).search(@query)
+      end
+    @totalhits = @employees.size
+    end
   end
 
   def show

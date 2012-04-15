@@ -1,4 +1,11 @@
-<%= f.input :assignment_id, :label => "Assignment", :collection => Assignment.current.by_employee.by_store.all %>
+<% if current_user.employee.role? == "manager" %>
+  <%= f.input :assignment_id, :label => "Assignment", :collection => Assignment.current.by_employee.for_store(current_user.employee.current_assignment.store.id).all %>
+<% end %>
+
+<% if current_user.employee.role? == "admin" %>
+  <%= f.input :assignment_id, :label => "Assignment", :collection => Assignment.current.by_employee.by_store.all %>
+<% end %>
+
 <%= f.input :date, :label => "Date", :as => :date, :order => [:month, :day, :year], :start_year => Date.today.year - 20, :end_year => Date.today.year %>
 <%= f.input :start_time, :label => "Start Time", :as => :time %>
 
