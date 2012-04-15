@@ -9,6 +9,7 @@ class ShiftJob < ActiveRecord::Base
   # Validations
   # -----------------------------
   validate :shift_end_time_passed
+  validate :job_is_active_in_system
 
   scope :by_job, joins(:job).order('name')
   
@@ -25,9 +26,16 @@ class ShiftJob < ActiveRecord::Base
     if conv_now > conv_end || conv_now < conv_start
       return true
     else
-      errors.add(:shift_id, "must be after shift has ended, current time is #{time_1}, shift_end is #{time_2}")
+      errors.add(:shift_id, "cannot still be ongoing.")
       return false
     end
- end
+  end
+  
+  def job_is_active_in_system
+    all_active_jobs = Job.active.all.map{|j| j.id}
+    unless all_active_jobs.include?(self.job_id)
+      errors.add(:job_id, "is not an active job at the creamery")
+    end
+  end
 
 end

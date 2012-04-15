@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ShiftTest < ActiveSupport::TestCase
+
   # Test relationships
    should belong_to(:assignment)
    should have_many(:shift_jobs)
@@ -9,17 +10,7 @@ class ShiftTest < ActiveSupport::TestCase
    should have_one(:employee).through(:assignment)
 
   # Test basic validations
-  # for assignment id
-   should allow_value(1).for(:assignment_id)
-   should allow_value(2).for(:assignment_id)
-   should allow_value(3).for(:assignment_id)
-   should allow_value(4).for(:assignment_id)
-   should allow_value(5).for(:assignment_id)
-   should allow_value(6).for(:assignment_id)
-   should_not allow_value("bad").for(:assignment_id)
-   should_not allow_value(0).for(:assignment_id)
-   should_not allow_value(2.5).for(:assignment_id)
-   should_not allow_value(-2).for(:assignment_id)
+
   # for date
    should allow_value(7.weeks.ago.to_date).for(:date)
    should allow_value(2.years.ago.to_date).for(:date)
@@ -57,6 +48,7 @@ class ShiftTest < ActiveSupport::TestCase
       @shift_cindy.destroy
      end
 =end
+
   
     # now run the tests:
      should "have all the shifts listed chronologically by date" do
@@ -129,8 +121,8 @@ class ShiftTest < ActiveSupport::TestCase
        @shift_ed3 = FactoryGirl.build(:shift, :assignment => @assign_ed, :date => 2.weeks.ago.to_date, :start_time => Time.local(2000,1,1,10,0,0), :end_time => Time.local(2000,1,1,12,0,0))
        assert @shift_ed3.valid?
      end
-     
   end
+
 end
 
 

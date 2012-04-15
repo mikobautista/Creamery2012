@@ -63,7 +63,7 @@ class AssignmentTest < ActiveSupport::TestCase
        @promote_ben.destroy
        @assign_kathryn.destroy
      end
-     
+   
      should "have a scope 'for_store' that works" do
        assert_equal 4, Assignment.for_store(@cmu.id).size
        assert_equal 1, Assignment.for_store(@oakland.id).size
@@ -118,6 +118,11 @@ class AssignmentTest < ActiveSupport::TestCase
        assert @assign_alex.valid?
        @second_assignment_for_alex = FactoryGirl.build(:assignment, :employee => @alex, :store => @oakland, :start_date => 3.weeks.ago.to_date, :end_date => Time.now.to_date)
        assert @second_assignment_for_alex.valid?
+     end
+     
+     should "display the name of the assignment" do
+       assert_equal "Gruberman, Ed @ CMU", @assign_ed.name
+       assert_equal "Crawford, Cindy @ CMU", @assign_cindy.name
      end
      
      should "not allow for a end date in the future or before the start date" do

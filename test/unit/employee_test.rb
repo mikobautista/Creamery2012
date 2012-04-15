@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class EmployeeTest < ActiveSupport::TestCase
+ 
   # Test relationships
   should have_many(:assignments)
   should have_many(:stores).through(:assignments)
@@ -120,6 +121,11 @@ class EmployeeTest < ActiveSupport::TestCase
       assert_equal ["Heimann"], Employee.admins.alphabetical.map{|e| e.last_name}
     end
     
+    # test the method 'role?'
+    should "show role of employee" do
+      assert_equal "admin", @alex.role?
+    end
+    
     # test the method 'name'
     should "shows name as last, first name" do
       assert_equal "Heimann, Alex", @alex.name
@@ -159,4 +165,5 @@ class EmployeeTest < ActiveSupport::TestCase
       assert_equal 30, @kathryn.age
     end
   end
+
 end

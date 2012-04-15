@@ -45,5 +45,12 @@ FactoryGirl.define do
     association :job
     association :shift
   end
+  
+  factory :user do
+    email "michaeljoseph.bautista@gmail.com"
+    password "secret"
+    association :employee
+  end
+  
 
 end

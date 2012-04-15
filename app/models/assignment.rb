@@ -25,6 +25,7 @@ class Assignment < ActiveRecord::Base
   scope :for_pay_level, lambda {|pay_level| where("pay_level = ?", pay_level) }
   scope :for_role, lambda {|role| joins(:employee).where("role = ?", role) }
 
+  # Other Methods
   def name
     "#{self.employee.name} @ #{self.store.name}"
   end
@@ -39,7 +40,6 @@ class Assignment < ActiveRecord::Base
   
   # Private methods for callbacks and custom validations
   private  
-  
   def end_previous_assignment
     current_assignment = Employee.find(self.employee_id).current_assignment
     if current_assignment.nil?
@@ -49,7 +49,6 @@ class Assignment < ActiveRecord::Base
     end
   end
   
-  # Again, these are not DRY (...but AM section people should be thinking of how to clean this up)
   def employee_is_active_in_system
     all_active_employees = Employee.active.all.map{|e| e.id}
     unless all_active_employees.include?(self.employee_id)

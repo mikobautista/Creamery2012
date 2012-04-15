@@ -61,7 +61,7 @@ class Shift < ActiveRecord::Base
   scope :for_past_days, lambda {|num| where('date >= ? AND date < ?', num.days.ago.to_date, Date.current)}
 
   # returns shifts in chronological order
-  scope :chronological, order('date DESC')
+  scope :chronological, order('date')
 
   # orders values by store  
   scope :by_store, joins(:store).order('name')

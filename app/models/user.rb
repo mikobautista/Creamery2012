@@ -13,21 +13,21 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 4, :allow_blank => true
-  validate :valid_and_active_employee_id
+  validate :employee_is_active_in_system
   
   # Scopes
   scope :alphabetical, joins(:employee).order('last_name, first_name')
 
   def proper_name
-          Employee.find(self.employee_id).name 
+    Employee.find(self.employee_id).name 
   end
 
   def role
-          Employee.find(self.employee_id).role
+    Employee.find(self.employee_id).role
   end
 
   # Validation Method
-  def valid_and_active_employee_id
+  def employee_is_active_in_system
     employee_ids = Employee.active.all.map{|e| e.id}
     unless employee_ids.include?(self.employee_id)
       errors.add(:employee_id, "is not an active employee")
