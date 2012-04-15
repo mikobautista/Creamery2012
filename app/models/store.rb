@@ -1,7 +1,7 @@
 class Store < ActiveRecord::Base
   # Callbacks
   before_save :reformat_phone
-  before_save :find_store_coordinates #comment this out to run unit tests
+  #before_save :find_store_coordinates #comment this out to run unit tests
   
   # Relationships
   has_many :assignments

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413085852) do
+ActiveRecord::Schema.define(:version => 20120414215839) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "store_id"
@@ -79,8 +79,11 @@ ActiveRecord::Schema.define(:version => 20120413085852) do
     t.string   "email"
     t.string   "password_hash"
     t.string   "password_salt"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
+    t.string   "auth_token"
   end
 
 end

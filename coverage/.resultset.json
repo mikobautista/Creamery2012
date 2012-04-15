@@ -49,6 +49,10 @@
         1,
         null
       ],
+      "/Users/mikobautista/Documents/67272/Phase 3/Creamery/app/helpers/password_resets_helper.rb": [
+        1,
+        null
+      ],
       "/Users/mikobautista/Documents/67272/Phase 3/Creamery/app/helpers/sessions_helper.rb": [
         1,
         null
@@ -456,6 +460,35 @@
         null,
         null,
         1,
+        null,
+        null
+      ],
+      "/Users/mikobautista/Documents/67272/Phase 3/Creamery/app/controllers/password_resets_controller.rb": [
+        1,
+        1,
+        null,
+        null,
+        1,
+        0,
+        0,
+        0,
+        null,
+        null,
+        1,
+        0,
+        null,
+        null,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        null,
+        0,
+        null,
+        null,
+        null,
         null,
         null
       ],
@@ -941,6 +974,7 @@
         null,
         null,
         1,
+        5,
         null,
         null,
         null,
@@ -998,11 +1032,33 @@
         null,
         1,
         null,
+        4,
+        4,
+        null,
+        null,
+        1,
+        0,
+        0,
+        0,
+        0,
+        null,
+        null,
+        1,
         1,
         4,
         4,
         4,
         null,
+        null,
+        null
+      ],
+      "/Users/mikobautista/Documents/67272/Phase 3/Creamery/app/mailers/user_mailer.rb": [
+        1,
+        1,
+        null,
+        1,
+        0,
+        0,
         null,
         null
       ],
@@ -1038,7 +1094,7 @@
         null
       ]
     },
-    "timestamp": 1334477429
+    "timestamp": 1334479163
   },
   "RSpec": {
     "coverage": {
